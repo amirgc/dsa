@@ -3,3 +3,6 @@
 ################################################################################
 
 /DataStrcutureAlgorithm/bin/Debug
+/DataStrcutureAlgorithm/obj/Debug
+/DataStrcutureAlgorithm.UnitTest/obj
+/.vs/DataStrcutureAlgorithm/v15
