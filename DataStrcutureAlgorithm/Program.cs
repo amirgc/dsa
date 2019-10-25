@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using DataStrcutureAlgorithm.Concepts;
+using System;
 
 namespace DataStrcutureAlgorithm
 {
@@ -10,6 +7,7 @@ namespace DataStrcutureAlgorithm
     {
         public static void Main(string[] args)
         {
+            BitManipulation.BitWiseOperatorTest();
             Console.Read();
         }
         public static void print(int[] arr)

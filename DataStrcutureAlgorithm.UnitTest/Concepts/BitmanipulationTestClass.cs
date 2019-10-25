@@ -18,7 +18,7 @@ namespace DataStrcutureAlgorithm.UnitTest.Concepts
         [Fact]
         public void Should()
         {
-            var res = bitManipulation.shitftBit(9);
+            var res = bitManipulation.ShitftBit(9);
             int expected = 18;
             Assert.Equal(res, expected);
         }
