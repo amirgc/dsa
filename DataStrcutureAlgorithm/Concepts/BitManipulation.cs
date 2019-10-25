@@ -4,9 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ConsoleApp1
+namespace DataStrcutureAlgorithm.Concepts
 {
     public class BitManipulation
     {
+        public int shitftBit(int n)
+        {
+            return n << 1;
+        }
     }
 }

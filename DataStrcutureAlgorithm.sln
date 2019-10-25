@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.489
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAndAlgorithm", "DataStrcutureAlgorithm\DataAndAlgorithm.csproj", "{985B3FFD-5A8B-4521-ACD7-46919E4A32DC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataStrcutureAlgorithm", "DataStrcutureAlgorithm\DataStrcutureAlgorithm.csproj", "{985B3FFD-5A8B-4521-ACD7-46919E4A32DC}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataStrcutureAlgorithm.UnitTest", "DataStrcutureAlgorithm.UnitTest\DataStrcutureAlgorithm.UnitTest.csproj", "{C6E3EA5D-83D1-4600-802C-A032B95A92F1}"
 EndProject

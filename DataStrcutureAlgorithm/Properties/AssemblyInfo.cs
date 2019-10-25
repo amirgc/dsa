@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("ConsoleApp1")]
+[assembly: AssemblyTitle("DataStrcutureAlgorithm.UnitTest")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("LG")]
-[assembly: AssemblyProduct("ConsoleApp1")]
+[assembly: AssemblyProduct("DataStrcutureAlgorithm.UnitTest")]
 [assembly: AssemblyCopyright("Copyright © LG 2019")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
