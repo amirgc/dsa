@@ -13,11 +13,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DataStrcutureAlgorithm\DataStrcutureAlgorithm.csproj" />
+    <Folder Include="Algorithms\" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Algorithms\" />
+    <ProjectReference Include="..\DataStrcutureAlgorithm\DataStrcutureAlgorithm.csproj" />
   </ItemGroup>
 
 </Project>

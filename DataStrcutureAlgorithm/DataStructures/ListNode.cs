@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace DataStrcutureAlgorithm.DataStructures
 {
@@ -52,6 +49,7 @@ namespace DataStrcutureAlgorithm.DataStructures
                 last = last.next;
             last.next = new_node;
         }
+
         public void Print()
         {
             while (head != null)

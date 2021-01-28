@@ -43,6 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Concepts\BitManipulation.cs" />
+    <Compile Include="DataStructures\HashmapLinkedList.cs" />
     <Compile Include="LeetCode\LongestPalindrome.cs" />
     <Compile Include="DataStructures\ListNode.cs" />
     <Compile Include="Algorithms\MergeSort.cs" />
