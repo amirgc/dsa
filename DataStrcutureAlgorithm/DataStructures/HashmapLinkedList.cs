@@ -37,6 +37,7 @@ namespace DataStrcutureAlgorithm.DataStructures
         {
             int hashvalue = GetHash(key);
             int index = hashvalue % ARRAY_SIZE;
+
             var list = linkedLists[index];
 
             if (list == null)
@@ -54,7 +55,6 @@ namespace DataStrcutureAlgorithm.DataStructures
 
             return null;
         }
-
 
         public void printHashMap()
         {
@@ -83,7 +83,10 @@ namespace DataStrcutureAlgorithm.DataStructures
         }
         protected int GetHash(object key)
         {
-            return key.GetHashCode();
+            int hash = key.GetHashCode();
+            if (hash < 0)
+                return hash * (-1);
+            return hash;
         }
 
     }
