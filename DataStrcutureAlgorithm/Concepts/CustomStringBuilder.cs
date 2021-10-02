@@ -42,6 +42,7 @@ namespace DataStrcutureAlgorithm.Concepts
             {
                 newChars[counter++] = ch;
             }
+
             chars = newChars;
         }
 
