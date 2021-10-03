@@ -20,5 +20,7 @@ namespace DataStrcutureAlgorithm.UnitTest.DataStructures
             string expected = "1001";
             Assert.Equal(res, expected);
         }
+    
+    
     }
 }

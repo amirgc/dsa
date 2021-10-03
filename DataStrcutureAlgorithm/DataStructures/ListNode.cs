@@ -3,7 +3,7 @@
 
 namespace DataStrcutureAlgorithm.DataStructures
 {
-    public class ListNode
+    public class ListNodeMine
     {
         internal class Node
         {

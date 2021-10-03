@@ -20,21 +20,8 @@ namespace DataStrcutureAlgorithm
             //LeetCode.StringToInteger.MaxProfit(new int[] { 6, 1, 3, 2, 4, 7 });
             //LeetCode.StringToInteger.MaxProfit(new int[] { 2, 1, 2, 1, 0, 1, 2 });
 
-            //var charTy = new char[][]
-            //        {
-            //         new char[] {'5', '3', '.', '.', '7', '.', '.', '.', '.'},
-            //         new char[] {'6', '.', '.', '1', '9', '5', '.', '.', '.'},
-            //         new char[] {'.', '9', '8', '.', '.', '.', '.', '6', '.'},
-            //         new char[] {'8', '.', '.', '.', '6', '.', '.', '.', '3'},
-            //         new char[] {'4', '.', '.', '8', '.', '3', '.', '.', '1'},
-            //         new char[] {'7', '.', '.', '.', '2', '.', '.', '.', '6'},
-            //         new char[] {'.', '6', '.', '.', '.', '.', '2', '8', '.'},
-            //         new char[] {'.', '.', '.', '4', '1', '9', '.', '.', '5'},
-            //         new char[] { '.', '.', '.', '.', '8', '.', '.', '7', '9'}
-            //        };
-
             var charTy = new char[][]
-            {
+      {
                new char[]{'.', '.', '.', '.', '.', '.', '5', '.', '.'},
                new char[]{'.', '.', '.', '.', '.', '.', '.', '.', '.'},
                new char[]{'.', '.', '.', '.', '.', '.', '.', '.', '.'},
@@ -44,7 +31,7 @@ namespace DataStrcutureAlgorithm
                new char[]{'.', '.', '.', '3', '4', '.', '.', '.', '.'},
                new char[]{'.', '.', '.', '.', '.', '3', '.', '.', '.'},
                new char[]{'.', '.', '.', '.', '.', '5', '2', '.', '.' }
-            };
+      };
 
             var res = LeetCode.StringToInteger.IsValidSudoku(charTy);
 
