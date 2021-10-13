@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DataStrcutureAlgorithm.Models;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -15,6 +16,11 @@ namespace DataStrcutureAlgorithm.DataStructures
             val = x;
             next = null;
         }
+        public ListNode(int x = 0, ListNode n = null)
+        {
+            val = x;
+            next = n;
+        }
     }
 
     public class DataStructureReview
@@ -22,6 +28,35 @@ namespace DataStrcutureAlgorithm.DataStructures
 
         public bool SearchMatrix(int[][] matrix, int target)
         {
+            int r = matrix.Length;
+            int c = matrix[0].Length;
+            int len = r * c;
+
+            int startIndex = 0;
+            int endIndex = len - 1;
+
+            while (startIndex <= endIndex)
+            {
+                int currIndex = (startIndex + endIndex) / 2;
+                int val = matrix[currIndex / r][currIndex / c];
+
+                if (val == target)
+                {
+                    return true;
+                }
+
+                if (target < val)
+                {
+                    endIndex = currIndex - 1;
+
+                }
+                else
+                {
+                    startIndex = currIndex + 1;
+                }
+
+            }
+
             return false;
         }
 
@@ -182,6 +217,276 @@ namespace DataStrcutureAlgorithm.DataStructures
 
             return res;
         }
-   
+
+        public ListNode RemoveElements(ListNode head, int val)
+        {
+            if (head == null)
+                return null;
+
+            if (head.val == val)
+            {
+                return RemoveElements(head.next, val);
+            }
+
+            head.next = RemoveElements(head.next, val);
+
+            return head;
+        }
+
+        public ListNode ReverseList(ListNode head)
+        {
+            Stack<int> listNodes = new Stack<int>();
+
+            while (head != null)
+            {
+                listNodes.Push(head.val);
+                head = head.next;
+            }
+
+            var newhead = AddNewNode(new ListNode(), listNodes);
+            return newhead.next;
+        }
+
+        public ListNode AddNewNode(ListNode listNode, Stack<int> listNodes)
+        {
+            if (listNodes.Count == 0)
+                return null;
+
+            listNode.next = new ListNode(listNodes.Pop(), null);
+            listNode = listNode.next;
+
+            listNode.next = AddNewNode(listNode, listNodes);
+
+            return listNode;
+        }
+
+        public ListNode DeleteDuplicates(ListNode head)
+        {
+            return DeleteDuplicates(head, new HashSet<int>());
+        }
+
+        private ListNode DeleteDuplicates(ListNode head, HashSet<int> hashSet)
+        {
+            if (head == null)
+                return null;
+
+            if (hashSet.Contains(head.val))
+            {
+                DeleteDuplicates(head.next, hashSet);
+            }
+
+            hashSet.Add(head.val);
+
+            head.next = DeleteDuplicates(head.next, hashSet);
+
+            return head;
+        }
+
+        public bool IsValid(string s)
+        {
+            Stack<char> vs = new Stack<char>();
+
+            for (int i = 0; i < s.Length; i++)
+            {
+
+                switch (s[i])
+                {
+                    case '(':
+                    case '[':
+                    case '{':
+                        vs.Push(s[i]);
+                        break;
+                    case ')':
+                        if (vs.Peek() != '(')
+                            return false;
+                        vs.Pop();
+                        break;
+                    case ']':
+                        if (vs.Peek() != '[')
+                            return false;
+                        vs.Pop();
+                        break;
+                    case '}':
+                        if (vs.Peek() != '{')
+                            return false;
+                        vs.Pop();
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            return vs.Count == 0;
+        }
+
+        public IList<int> PreorderTraversal(TreeNode root)
+        {
+            var res = PreorderTraversal(root, new List<int>());
+
+            if (res == null)
+            {
+                return new List<int>();
+            }
+
+            return res;
+        }
+
+        private IList<int> PreorderTraversal(TreeNode root, IList<int> res)
+        {
+            if (root == null)
+                return null;
+
+            res.Add(root.val);
+            PreorderTraversal(root.left, res);
+            PreorderTraversal(root.right, res);
+
+            return res;
+        }
+
+        public IList<IList<int>> LevelOrder(TreeNode root)
+        {
+            var dict = new Dictionary<int, List<int>>();
+            var recurseValue = TraverseLevelOrder(root, dict, 0);
+            var res = new List<IList<int>>();
+
+            foreach (var val in recurseValue)
+            {
+                res.Add(val.Value);
+            }
+
+            return res;
+        }
+
+        private Dictionary<int, List<int>> TraverseLevelOrder(TreeNode root, Dictionary<int, List<int>> dict, int level)
+        {
+            if (root == null)
+                return dict;
+
+            if (dict.ContainsKey(level))
+            {
+                dict[level].Add(root.val);
+            }
+            else
+            {
+                dict.Add(level, new List<int>() { root.val });
+            }
+            TraverseLevelOrder(root.left, dict, level + 1);
+            TraverseLevelOrder(root.right, dict, level + 1);
+
+            return dict;
+        }
+
+        public int MaxDepth(TreeNode root)
+        {
+            return TraverseMaxDephth(root, 0);
+        }
+
+        private int TraverseMaxDephth(TreeNode root, int current_depth)
+        {
+            if (root == null)
+                return current_depth;
+
+            int leftMaxDept = TraverseMaxDephth(root.left, current_depth + 1);
+            int rightMaxDepth = TraverseMaxDephth(root.right, current_depth + 1);
+
+            return leftMaxDept > rightMaxDepth ? leftMaxDept : rightMaxDepth;
+        }
+
+        public bool IsSymmetric(TreeNode root)
+        {
+            return isMirror(root, root);
+        }
+        public Boolean isMirror(TreeNode t1, TreeNode t2)
+        {
+            if (t1 == null && t2 == null) return true;
+            if (t1 == null || t2 == null) return false;
+            return (t1.val == t2.val)
+                && isMirror(t1.right, t2.left)
+                && isMirror(t1.left, t2.right);
+        }
+
+        public TreeNode InvertTree(TreeNode root)
+        {
+            if (root == null)
+                return null;
+
+            ReverseNode(root, root.left, root.right);
+            return root;
+        }
+
+        private void ReverseNode(TreeNode h1, TreeNode t1, TreeNode t2)
+        {
+            if (t1 == null && t2 == null)
+                return;
+
+            h1.left = t2;
+            h1.right = t1;
+
+            ReverseNode(t1, t1?.left, t1?.right);
+            ReverseNode(t2, t2?.left, t2?.left);
+
+        }
+
+        public bool HasPathSum(TreeNode root, int targetSum)
+        {
+            return hasPathSum(root, targetSum, 0);
+        }
+
+        private bool hasPathSum(TreeNode root, int target, int currentSum)
+        {
+            if (root == null)
+            {
+                if (target != currentSum)
+                    return false;
+                else
+                    return true;
+            }
+
+            currentSum = currentSum + root.val;
+
+            if (root.left == null && root.right != null)
+            {
+                return hasPathSum(root.right, target, currentSum);
+            }
+            else if (root.left != null && root.right == null)
+            {
+                return hasPathSum(root.left, target, currentSum);
+            }
+            else
+            {
+                return hasPathSum(root.left, target, currentSum) || hasPathSum(root.right, target, currentSum);
+            }
+        }
+
+        public TreeNode SearchBST(TreeNode root, int val)
+        {
+            while (root != null)
+            {
+                if (root.val == val)
+                    return root;
+
+                if (val < root.val)
+                    root = root.left;
+                else
+                    root = root.right;
+            }
+
+            return null;
+        }
+
+        public int search(int[] nums, int target)
+        {
+            int pivot, left = 0, right = nums.Length - 1;
+            while (left <= right)
+            {
+                pivot = left + (right - left) / 2;
+                if (nums[pivot] == target) return pivot;
+                if (target < nums[pivot]) right = pivot - 1;
+                else left = pivot + 1;
+            }
+            return -1;
+        }
+
+
     }
 }
