@@ -1,5 +1,6 @@
 ﻿using DataStrcutureAlgorithm.DataStructures;
 using DataStrcutureAlgorithm.Models;
+using UnitTest.DataStructures;
 using Xunit;
 
 namespace DataStrcutureAlgorithm.UnitTest.DataStructures
@@ -7,9 +8,11 @@ namespace DataStrcutureAlgorithm.UnitTest.DataStructures
     public class DataStructureReviewTestClass
     {
         private readonly DataStructureReview dataStructureReview;
+        private readonly DataStructureReviewTwo dataStructureReviewtwo;
         public DataStructureReviewTestClass()
         {
             dataStructureReview = new DataStructureReview();
+            dataStructureReviewtwo = new DataStructureReviewTwo();
         }
 
         [Fact]
@@ -137,6 +140,13 @@ namespace DataStrcutureAlgorithm.UnitTest.DataStructures
             var res = dataStructureReview.IsSymmetric(rootNode);
             Assert.True(res);
 
+        }
+
+        [Fact]
+        public void IsFoundBadversion()
+        {
+            var res = dataStructureReviewtwo.FirstBadVersion(2126753390);
+            Assert.Equal(1702766719, res);
         }
     }
 }

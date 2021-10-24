@@ -14,10 +14,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Algorithms\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\DataStrcutureAlgorithm\DataStrcutureAlgorithm.csproj" />
   </ItemGroup>
 
