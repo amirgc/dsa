@@ -19,5 +19,13 @@ namespace UnitTest.Algorithms
             var res = algorithmReviewPartOne.SortedSquares(ip);
             Assert.Equal(op, res);
         }
+
+        [Fact]
+        public void RotateTest()
+        {
+            algorithmReviewPartOne.Rotate(new int[] { 1, 2 }, 3);
+        }
+
+
     }
 }

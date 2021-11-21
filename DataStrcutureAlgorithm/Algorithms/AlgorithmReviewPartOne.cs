@@ -30,5 +30,73 @@ namespace DataStrcutureAlgorithm.Algorithms
             }
             return res;
         }
+
+        public void Rotate(int[] nums, int k)
+        {
+            var res = new int[nums.Length];
+
+            if (k >= nums.Length)
+            {
+                k = k % nums.Length;
+            }
+
+            if (k == 0)
+                return;
+
+            for (int i = 0; i < nums.Length; i++)
+            {
+                int index;
+                if (i + k >= nums.Length)
+                    index = k + i - nums.Length;
+                else
+                    index = i + k;
+
+                res[index] = nums[i];
+            }
+
+            nums = res;
+        }
+        public void MoveZeroes(int[] nums)
+        {
+            int index = 0;
+            for (int i = 0; i < nums.Length; i++)
+            {
+                if (nums[i] != 0)
+                {
+                    nums[index] = nums[i];
+                    index++;
+                }
+            }
+
+            for (int j = index; j < nums.Length; j++)
+            {
+                nums[j] = 0;
+            }
+        }
+        public int[] TwoSum(int[] numbers, int target)
+        {
+            var res = new int[2];
+            int counter = numbers.Length;
+            int leftPointer = 0;
+            int rightPointer = counter - 1;
+
+            while (leftPointer < rightPointer)
+            {
+                if (numbers[leftPointer] + numbers[rightPointer] == target)
+                    return new[] { leftPointer + 1, rightPointer + 1 };
+
+                if (numbers[leftPointer] + numbers[rightPointer] > target)
+                {
+                    rightPointer--;
+                }
+                else
+                {
+                    leftPointer++;
+                }
+            }
+
+
+            return res;
+        }
     }
 }

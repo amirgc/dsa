@@ -487,6 +487,85 @@ namespace DataStrcutureAlgorithm.DataStructures
             return -1;
         }
 
+        public int Tribonacci(int n)
+        {
+
+            if (n == 0)
+                return 0;
+
+            if (n == 1 || n == 2)
+                return 1;
+
+            int t0 = 0;
+            int t1 = 1;
+            int t2 = 1;
+            int res = 0;
+            int counter = 3;
+            //T0 = 0, T1 = 1, T2 = 1, and Tn+3 = Tn + Tn + 1 + Tn + 2 for n >= 0.
+
+            while (counter <= n)
+            {
+                res = t0 + t1 + t2;
+                t0 = t1;
+                t1 = t2;
+                t2 = res;
+                counter++;
+            }
+            return res;
+        }
+
+        public int[][] Merge(int[][] intervals)
+        {
+
+
+            Array.Sort(intervals, (a, b) => Comparer<int>.Default.Compare(a[0], b[0]));
+
+            LinkedList<int[]> merged = new LinkedList<int[]>();
+
+            foreach (int[] interval in intervals)
+            {
+                // if the list of merged intervals is empty or if the current
+                // interval does not overlap with the previous, simply append it.
+                if (merged.Count == 0 || merged.Last.Value[1] < interval[0])
+                {
+                    merged.AddLast(interval);
+                }
+                // otherwise, there is overlap, so we merge the current and previous
+                // intervals.
+                else
+                {
+                    merged.Last.Value[1] = Math.Max(merged.Last.Value[1], interval[1]);
+                }
+            }
+            var res = new int[merged.Count][];
+            int counter = 0;
+            while (merged.Count != 0)
+            {
+                res[counter] = merged.Last.Value;
+                merged.RemoveLast();
+                counter++;
+            }
+
+            return res;
+        }
+        public int ClimbStairs(int n)
+        {
+            if (n == 1) return 1;
+
+            int[] fib = new int[n];
+            fib[0] = 0;
+            fib[1] = 1;
+            fib[2] = 2;
+
+            for (int i = 3; i <= n; i++)
+            {
+
+                fib[i] = fib[i - 1] + fib[i - 2];
+            }
+
+            return fib[n];
+
+        }
 
     }
 }
