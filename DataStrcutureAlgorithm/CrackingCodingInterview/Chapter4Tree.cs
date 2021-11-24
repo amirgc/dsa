@@ -51,6 +51,7 @@ namespace DataStrcutureAlgorithm.CrackingCodingInterview
                     result.AddLast(item);
 
                 results.Add(result);
+                return;
             }
 
             int headFirst = first.First.Value;
@@ -68,5 +69,11 @@ namespace DataStrcutureAlgorithm.CrackingCodingInterview
             second.AddFirst(headsecond);
 
         }
+
+        private void printTree()
+        {
+
+        }
+
     }
 }
