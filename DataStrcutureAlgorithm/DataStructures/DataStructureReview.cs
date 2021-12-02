@@ -235,27 +235,28 @@ namespace DataStrcutureAlgorithm.DataStructures
 
         public ListNode ReverseList(ListNode head)
         {
-            Stack<int> listNodes = new Stack<int>();
+            Stack<int> listNodesStack = new Stack<int>();
 
             while (head != null)
             {
-                listNodes.Push(head.val);
+                listNodesStack.Push(head.val);
                 head = head.next;
             }
 
-            var newhead = AddNewNode(new ListNode(), listNodes);
-            return newhead.next;
+            var newhead = AddNewNode(new ListNode(), listNodesStack);
+           
+            return newhead;
         }
 
-        public ListNode AddNewNode(ListNode listNode, Stack<int> listNodes)
+        public ListNode AddNewNode(ListNode listNode, Stack<int> listNodesStack)
         {
-            if (listNodes.Count == 0)
+            if (listNodesStack.Count == 0)
                 return null;
 
-            listNode.next = new ListNode(listNodes.Pop(), null);
+            listNode.next = new ListNode(listNodesStack.Pop(), null);
             listNode = listNode.next;
 
-            listNode.next = AddNewNode(listNode, listNodes);
+            listNode.next = AddNewNode(listNode, listNodesStack);
 
             return listNode;
         }

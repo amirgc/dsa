@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DataStrcutureAlgorithm.DataStructures;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -220,7 +221,7 @@ namespace DataStrcutureAlgorithm.LeetCode
                 var currRow = i / column;
                 var currCol = i % column;
 
-                if (grid[currRow][currCol] == '1' && vistedOnesCordinates.Contains($"{currRow}-{currCol}"))
+                if (grid[currRow][currCol] == '1' && !vistedOnesCordinates.Contains($"{currRow}-{currCol}"))
                 {
                     totalPaths++;
                     vistedOnesCordinates.Add($"{currRow}-{currCol}");
@@ -296,5 +297,318 @@ namespace DataStrcutureAlgorithm.LeetCode
         }
 
         #endregion
+
+        #region Meeting Intervals
+
+        /* Given an array of meeting time intervals
+              intervals where intervals[i] = [starti, endi],
+                 return the minimum number of conference rooms required.*/
+        public class MeetingIntervals
+        {
+            public int StartTime { get; set; }
+            public int EndTime { get; set; }
+        }
+
+        public int MinMeetingRooms(int[][] intervals)
+        {
+            int totalRoomsRequired = 0;
+            List<MeetingIntervals> meetingIntervals = new List<MeetingIntervals>();
+            foreach (var interval in intervals)
+            {
+                meetingIntervals.Add(new MeetingIntervals()
+                {
+                    StartTime = interval[0],
+                    EndTime = interval[1]
+                });
+            }
+
+            meetingIntervals = meetingIntervals.OrderBy(x => x.StartTime).ThenBy(x => x.EndTime).ToList(); ;
+
+            Stack<MeetingIntervals> meetingIntervalsScheduleOrder = new Stack<MeetingIntervals>();
+
+            foreach (var currentInterval in meetingIntervals)
+            {
+                if (meetingIntervalsScheduleOrder.Count == 0)
+                {
+                    meetingIntervalsScheduleOrder.Push(currentInterval);
+                    totalRoomsRequired++;
+                }
+                else
+                {
+                    var lastLastInterval = meetingIntervalsScheduleOrder.Peek();
+                    if (lastLastInterval.EndTime > currentInterval.StartTime)
+                    {
+                        totalRoomsRequired++;
+                    }
+                    meetingIntervalsScheduleOrder.Push(currentInterval);
+                }
+            }
+
+            return totalRoomsRequired;
+        }
+
+        public int minMeetingRoomsSecondSolution(int[][] intervals)
+        {
+
+            // Check for the base case. If there are no intervals, return 0
+            if (intervals.Length == 0)
+            {
+                return 0;
+            }
+
+            // Min heap
+            MyPriorityQueue allocator = new MyPriorityQueue(intervals.Length);
+
+            // Sort the intervals by start time
+            Array.Sort(
+                intervals, (int[] a, int[] b) => { return a[0] - b[0]; }
+             );
+
+            //    // Add the first meeting
+            allocator.Add(intervals[0][1]);
+
+            //    // Iterate over remaining intervals
+            for (int i = 1; i < intervals.Length; i++)
+            {
+
+                // If the room due to free up the earliest is free, assign that room to this meeting.
+                if (intervals[i][0] >= allocator.Peek())
+                {
+                    allocator.Poll();
+                }
+
+                //// If a new room is to be assigned, then also we add to the heap,
+                //// If an old room is allocated, then also we have to add to the heap with updated end time.
+                allocator.Add(intervals[i][1]);
+            }
+
+            //    // The size of the heap tells us the minimum rooms required for all the meetings.
+            return allocator.GetHeapSize();
+        }
+
+        #endregion
+
+        public int[] getModifiedArray(int length, int[][] updates)
+        {
+            int[] myArray = new int[length];
+            int[] toModify = new int[length]; //maintaining the range
+
+            foreach (int[] currRange in updates)
+            {
+
+                int start = currRange[0];
+                int end = currRange[1];
+                int inc = currRange[2];
+
+                toModify[start] = toModify[start] + inc; //starting index to increase/add
+                if (end + 1 < length) toModify[end + 1] = toModify[end + 1] - inc; //till this index we have to add/increase
+
+            }
+
+            int currSum = 0;
+            //calculate the result based on values present in 'toModify' array
+            for (int i = 0; i < length; i++)
+            {
+                myArray[i] = currSum + toModify[i];
+                currSum = myArray[i];
+            }
+            return myArray;
+        }
+
+        #region FindCircleNum
+        /*
+         There are n cities. Some of them are connected, while some are not. If city a is connected directly with city b, 
+        and city b is connected directly with city c, then city a is connected indirectly with city c.
+        A province is a group of directly or indirectly connected cities and no other cities outside of the group.
+        You are given an n x n matrix isConnected where isConnected[i][j] = 1 if the ith city and the jth city are directly
+        connected, and isConnected[i][j] = 0 otherwise.
+        Return the total number of provinces.*/
+
+        public void dfs(int[][] M, int[] visited, int i)
+        {
+            for (int j = 0; j < M.Length; j++)
+            {
+                if (M[i][j] == 1 && visited[j] == 0)
+                {
+                    visited[j] = 1;
+                    dfs(M, visited, j);
+                }
+            }
+        }
+        public int findCircleNum(int[][] isConnected)
+        {
+            int[] visited = new int[isConnected.Length];
+            int count = 0;
+            for (int i = 0; i < isConnected.Length; i++)
+            {
+                if (visited[i] == 0)
+                {
+                    dfs(isConnected, visited, i);
+                    count++;
+                }
+            }
+            return count;
+        }
+        #endregion
+
+
+        private int MOD = (int)(1e9 + 7);
+        public int SumSubarrayMins(int[] arr)
+        {
+            int N = arr.Length;
+            long res = 0;
+            Stack<int> monoTone_Stack = new Stack<int>();
+            int[] previousMin = new int[N];
+            int[] nextMin = new int[N];
+
+            for (int i = 0; i < arr.Length; i++)
+            {
+                while (monoTone_Stack.Count != 0 && arr[monoTone_Stack.Peek()] > arr[i])
+                {
+                    monoTone_Stack.Pop();
+                }
+                previousMin[i] = monoTone_Stack.Count == 0 ? -1 : monoTone_Stack.Peek();
+                monoTone_Stack.Push(i);
+            }
+
+            monoTone_Stack = new Stack<int>();
+            for (int i = N - 1; i >= 0; i--)
+            {
+                while (monoTone_Stack.Count != 0 && arr[monoTone_Stack.Peek()] > arr[i])
+                {
+                    monoTone_Stack.Pop();
+                }
+                nextMin[i] = monoTone_Stack.Count == 0 ? N : monoTone_Stack.Peek();
+                monoTone_Stack.Push(i);
+            }
+
+            for (int i = 0; i < N; i++)
+            {
+                res = (res + arr[i] * (i - previousMin[i]) * (nextMin[i] - i)) % MOD;
+            }
+
+            return (int)(res % MOD);
+        }
+
+        public bool isPalindrome(int x)
+        {
+            string intStringValue = "";
+            int integerLength = 0;
+
+            if (x < 0)
+                return false;
+
+            while (x > 0)
+            {
+                int remainder = x % 10;
+                x = x / 10;
+                intStringValue += remainder.ToString();
+                integerLength++;
+            }
+
+            for (int i = 0; i < integerLength / 2; i++)
+            {
+                if (intStringValue[i] != intStringValue[integerLength - 1 - i])
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+        public int timeDifference(List<string> times)
+        {
+            int minTime = 0;
+
+            string lastTime = null;
+            int lastTimeInt = 0;
+            times.Sort();
+            bool comparisionStarted = false;
+
+            foreach (string time in times)
+            {
+                if (string.IsNullOrEmpty(lastTime))
+                {
+                    lastTime = time;
+                    lastTimeInt = ConvertIntToMinutes(time);
+                }
+                else
+                {
+                    int currentTime = ConvertIntToMinutes(time);
+                    int diff = FindTheDistanceBetweenTime(lastTimeInt, currentTime);
+                    lastTimeInt = currentTime;
+                    if ((minTime == 0 && !comparisionStarted))
+                    {
+                        minTime = diff;
+                    }
+                    else if (minTime > diff && comparisionStarted)
+                    {
+                        minTime = diff;
+                    }
+
+                    comparisionStarted = true;
+                }
+            }
+            int diffFInalTest = FindTheDistanceBetweenTime(ConvertIntToMinutes(times.First()),
+                ConvertIntToMinutes(times.Last()));
+            int res = minTime > diffFInalTest ? diffFInalTest : minTime;
+
+            return res;
+        }
+        public int FindTheDistanceBetweenTime(int time1, int time2)
+        {
+            int regularDifference = Math.Abs(time1 - time2);
+            int backwardTimeDifference = time1 > time2 ? 1440 - time1 + time2 : 1440 - time2 + time1;
+            return regularDifference < backwardTimeDifference ? regularDifference : backwardTimeDifference;
+        }
+
+        public int ConvertIntToMinutes(string time)
+        {
+            int timeInMinutes = 0;
+            var hourMinutesSplit = time.Split(":");
+            timeInMinutes = Convert.ToInt32(hourMinutesSplit[0]) * 60 + Convert.ToInt32(hourMinutesSplit[1]);
+            return timeInMinutes;
+        }
+
+        public int reverseBits(int input)
+        {
+            bool isOneFound = false;
+            Stack<int> bitStack = new Stack<int>();
+
+            while (input > 0)
+            {
+                int rem = input % 2;
+                input = input / 2;
+
+                if (rem == 1 && !isOneFound)
+                {
+                    isOneFound = true;
+                }
+
+                if (isOneFound)
+                {
+                    bitStack.Push(rem);
+                }
+            }
+
+
+            Stack<int> tempStack = new Stack<int>();
+
+            while (bitStack.Count != 0)
+            {
+                tempStack.Push(bitStack.Pop());
+            }
+
+            double res = 0;
+            double pow = tempStack.Count - 1;
+
+            while (tempStack.Count != 0)
+            {
+                res += tempStack.Pop() * Math.Pow(2.00, pow);
+                pow--;
+            }
+
+            return (int)res;
+        }
     }
 }

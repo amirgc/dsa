@@ -18,17 +18,12 @@ namespace DataStrcutureAlgorithm.UnitTest.DataStructures
         [Fact]
         public void ShouldReturnTrue()
         {
-            //var ip = new int[][]
-            //{
-            //        new int[]{ 1, 3, 5, 7},
-            //        new int[]{ 10,11,16,20},
-            //        new int[]{ 23,30,34,60},
-            //};
             var ip = new int[][]
-    {
-                    new int[]{ 1, 1}
-    };
-
+            {
+                    new int[]{ 1, 3, 5, 7},
+                    new int[]{ 10,11,16,20},
+                    new int[]{ 23,30,34,60},
+            };
             var res = dataStructureReview.SearchMatrix(ip, 3);
             bool expected = false;
             Assert.Equal(res, expected);
@@ -146,27 +141,26 @@ namespace DataStrcutureAlgorithm.UnitTest.DataStructures
         public void IsFoundBadversion()
         {
             var res = dataStructureReviewtwo.FirstBadVersion(2126753390);
-            Assert.Equal(1702766719, res);
+            Assert.Equal(1702766720, res);
         }
 
         [Fact]
         public void MergeTest()
         {
             var testSet = new int[6][];
-            //testSet[0] = new int[2] { 2, 3 };
-            //testSet[1] = new int[2] { 4, 5 };
-            //testSet[2] = new int[2] { 6, 7 };
-            //testSet[3] = new int[2] { 8, 9 };
-            //testSet[4] = new int[2] { 1, 10 };
+            testSet[0] = new int[2] { 2, 3 };
+            testSet[1] = new int[2] { 4, 5 };
+            testSet[2] = new int[2] { 6, 7 };
+            testSet[3] = new int[2] { 8, 9 };
+            testSet[4] = new int[2] { 1, 10 };
 
-            //testSet[0] = new int[2] { 1, 3 };
-            //testSet[1] = new int[2] { 2, 6 };
-            //testSet[2] = new int[2] { 8, 10 };
-            //testSet[3] = new int[2] { 8, 16 };
-            //testSet[4] = new int[2] { 15, 18 };
-            //testSet[5] = new int[2] { 20, 24 };
-            //var res = dataStructureReview.Merge(testSet);
-            var res = dataStructureReview.ClimbStairs(2);
+            testSet[0] = new int[2] { 1, 3 };
+            testSet[1] = new int[2] { 2, 6 };
+            testSet[2] = new int[2] { 8, 10 };
+            testSet[3] = new int[2] { 8, 16 };
+            testSet[4] = new int[2] { 15, 18 };
+            testSet[5] = new int[2] { 20, 24 };
+            var res = dataStructureReview.Merge(testSet);
         }
     }
 }
