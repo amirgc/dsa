@@ -244,7 +244,7 @@ namespace DataStrcutureAlgorithm.DataStructures
             }
 
             var newhead = AddNewNode(new ListNode(), listNodesStack);
-           
+
             return newhead;
         }
 
@@ -567,6 +567,6 @@ namespace DataStrcutureAlgorithm.DataStructures
             return fib[n];
 
         }
-
+       
     }
 }
