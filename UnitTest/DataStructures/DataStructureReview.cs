@@ -19,7 +19,8 @@ namespace DataStrcutureAlgorithm.UnitTest.DataStructures
         [Fact]
         public void MergeSortUnitTest()
         {
-            var res = mergeSort.mergeSort(new int[] { 6, 7, 9, 5, 3, 1, 7 });
+            var res = mergeSort.mergeSort(new int[] { 7, 5, 2, 9, 1 });
+            Assert.Equal(res, new int[] { 1, 2, 5, 7, 9 });
         }
 
         [Fact]
