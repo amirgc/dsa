@@ -9,10 +9,17 @@ namespace DataStrcutureAlgorithm.UnitTest.DataStructures
     {
         private readonly DataStructureReview dataStructureReview;
         private readonly DataStructureReviewTwo dataStructureReviewtwo;
+        private readonly MergeSort mergeSort;
         public DataStructureReviewTestClass()
         {
             dataStructureReview = new DataStructureReview();
             dataStructureReviewtwo = new DataStructureReviewTwo();
+            mergeSort = new MergeSort();
+        }
+        [Fact]
+        public void MergeSortUnitTest()
+        {
+            var res = mergeSort.mergeSort(new int[] { 6, 7, 9, 5, 3, 1, 7 });
         }
 
         [Fact]

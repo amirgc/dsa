@@ -459,17 +459,19 @@ namespace DataStrcutureAlgorithm.BTBSWE
                 return;
             }
 
-            while (minElemStack.Peek() > element)
+            if (element > minElemStack.Peek() && minElemStack.Count == k)
+            {
+                return;
+            }
+
+            while (minElemStack.Count > 0 && minElemStack.Peek() > element)
             {
                 backUpStack.Push(minElemStack.Pop());
             }
 
             minElemStack.Push(element);
 
-            if (minElemStack.Count == k || backUpStack.Count == 0)
-                return;
-
-            while (minElemStack.Count != k && backUpStack.Count > 0)
+            while (minElemStack.Count < k && backUpStack.Count > 0)
             {
                 minElemStack.Push(backUpStack.Pop());
             }

@@ -19,7 +19,7 @@ namespace UnitTest.Primitives_Arrays
         [Fact]
         public void threeSumTest()
         {
-            var res = _primitives.threeSum(new int[] { -3, -1, 1, 0, 2, 10, -2, 8 }.);
+            var res = _primitives.threeSum(new int[] { -3, -1, 1, 0, 2, 10, -2, 8 });
         }
 
         [Fact]
