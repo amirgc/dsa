@@ -9,12 +9,12 @@ namespace DataStrcutureAlgorithm.UnitTest.DataStructures
     {
         private readonly DataStructureReview dataStructureReview;
         private readonly DataStructureReviewTwo dataStructureReviewtwo;
-        private readonly MergeSort mergeSort;
+        private readonly SortingAlgorithms mergeSort;
         public DataStructureReviewTestClass()
         {
             dataStructureReview = new DataStructureReview();
             dataStructureReviewtwo = new DataStructureReviewTwo();
-            mergeSort = new MergeSort();
+            mergeSort = new SortingAlgorithms();
         }
         [Fact]
         public void MergeSortUnitTest()
@@ -23,6 +23,12 @@ namespace DataStrcutureAlgorithm.UnitTest.DataStructures
             Assert.Equal(res, new int[] { 1, 2, 5, 7, 9 });
         }
 
+        [Fact]
+        public void QuickSortTest()
+        {
+            var res = mergeSort.quicksort(new int[] { 11, 7, 9, 2, 1, 8, 5 });
+            Assert.Equal(res, new int[] { 1, 2, 5, 7, 8, 9, 11 });
+        }
         [Fact]
         public void ShouldReturnTrue()
         {

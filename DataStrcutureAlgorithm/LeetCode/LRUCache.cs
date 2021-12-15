@@ -13,8 +13,6 @@ namespace DataStrcutureAlgorithm.LeetCode
             public DLinkedNode prev { get; set; }
             public DLinkedNode next { get; set; }
         }
-
-
         private int size;
         private int capacity;
         private DLinkedNode head, tail;
@@ -88,9 +86,9 @@ namespace DataStrcutureAlgorithm.LeetCode
 
         public void Put(int key, int value)
         {
-            DLinkedNode node = cache[key];
+            DLinkedNode node = new DLinkedNode();
 
-            if (node == null)
+            if (!cache.ContainsKey(key))
             {
                 DLinkedNode newNode = new DLinkedNode();
                 newNode.key = key;
@@ -112,6 +110,7 @@ namespace DataStrcutureAlgorithm.LeetCode
             else
             {
                 // update the value.
+                node = cache[key];
                 node.value = value;
                 moveToHead(node);
             }

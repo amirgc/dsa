@@ -477,5 +477,222 @@ namespace DataStrcutureAlgorithm.BTBSWE
             }
 
         }
+
+        public int[][] mergeOverlappingIntervals(int[][] A)
+        {
+
+            Stack<int> finalStack = new Stack<int>();
+            for (int i = 0; i < A.Length; i++)
+            {
+                if (finalStack.Count == 0)
+                {
+                    finalStack.Push(A[i][0]);
+                    finalStack.Push(A[i][1]);
+                }
+                else
+                {
+                    if (finalStack.Peek() >= A[i][0] && finalStack.Peek() < A[i][1])
+                    {
+                        finalStack.Pop();
+                        finalStack.Push(A[i][1]);
+                    }
+                    else if (finalStack.Peek() < A[i][0])
+                    {
+                        finalStack.Push(A[i][0]);
+                        finalStack.Push(A[i][1]);
+                    }
+                }
+            }
+            var res = new int[finalStack.Count / 2][];
+
+            int counter = 0;
+            while (finalStack.Count != 0)
+            {
+                int a = finalStack.Pop();
+                int b = finalStack.Pop();
+                res[counter++] = new int[] { b, a };
+            }
+
+            return res;
+        }
+
+        private Dictionary<int, string> digitToPossibleLetters = new Dictionary<int, string>() {
+            { 0,"" }, {1,""    },{2,"abc" }, {3,"def" },{4,"ghi" },  {5,"jkl" }, {6,"mno" }, {7,"pqrs"}, {8,"tuv" },{9,"wxyz" }};
+
+        public List<String> letterCombinations(String digits)
+        {
+            // When input string is empty
+            if (digits.Length == 0)
+            {
+                return new List<String>();
+            }
+
+            List<String> mnemonics = new List<String>();
+            exploreCombinations(0, new StringBuilder(), digits, mnemonics);
+            return mnemonics;
+        }
+
+        // Helper function for recursively calculating the ans
+        private void exploreCombinations(int currentDigit, StringBuilder partialMnemonic, string digits, List<String> mnemonics)
+        {
+
+            // Base Case - We have got an answer
+            if (currentDigit == digits.Length)
+            {
+                mnemonics.Add(partialMnemonic.ToString());
+                return;
+            }
+
+            char digitCharacter = digits[currentDigit];
+            int digitAsInt = digitCharacter - '0';
+
+            string letters = digitToPossibleLetters[digitAsInt];
+
+            foreach (char possibleLetter in letters)
+            {
+                // 1.) Choose - Append the letter that this digit can materialize into
+                partialMnemonic.Append(possibleLetter);
+
+                // 2.) Explore - Recurse on the decision with changed state. We advance the digit we are working on.
+                exploreCombinations(currentDigit + 1, partialMnemonic, digits, mnemonics);
+
+                // 3.) Unchoose - We have returned to this stack frame of choice. Remove the choice, next loop will choose again.
+                partialMnemonic.Remove(partialMnemonic.Length - 1, 1);
+            }
+        }
+
+        public List<string> restoreIpAddresses(string rawIpString)
+        {
+            var res = new List<string>();
+            restoreIpAddresses(new StringBuilder(), rawIpString, 1, res);
+            res.ForEach(x => Console.WriteLine(x));
+            return res;
+        }
+
+        public void restoreIpAddresses(StringBuilder partialIp, string remainingRawIPString, int position, List<string> result)
+        {
+            if (position == 4)
+            {
+                partialIp.Append(remainingRawIPString);
+                result.Add(partialIp.ToString());
+                return;
+            }
+            int remainingRawIPStringLength = remainingRawIPString.Length;
+            int characterThatRemainingFieldCanHold = (4 - position) * 3;
+            int minCharacterRequiredForNext = 4 - position;
+            int minimumCharacterItShouldHave = 1;
+            int maximumCharacterItCanHave = 3;
+
+            if (characterThatRemainingFieldCanHold - remainingRawIPStringLength >= 0)
+            {
+                maximumCharacterItCanHave = remainingRawIPStringLength - minCharacterRequiredForNext > 0 ? 3 :
+                                         remainingRawIPStringLength - minCharacterRequiredForNext;
+
+            }
+            else if (characterThatRemainingFieldCanHold - remainingRawIPStringLength < 0)
+            {
+                minimumCharacterItShouldHave = -1 * (characterThatRemainingFieldCanHold - remainingRawIPStringLength);
+            }
+
+            position += 1;
+            for (int i = minimumCharacterItShouldHave; i <= maximumCharacterItCanHave; i++)
+            {
+                var sb = new StringBuilder(partialIp.ToString());
+                sb.Append(remainingRawIPString.Substring(0, i) + '.');
+                restoreIpAddresses(sb, remainingRawIPString.Substring(i), position, result);
+            }
+        }
+
+
+        public List<String> restoreIpAddressesBSW(String rawIpString)
+        {
+            List<String> restoredIps = new List<String>();
+            restoreIps(0, 0, new int[4], rawIpString, restoredIps);
+
+            return restoredIps;
+        }
+
+        private void restoreIps(int progressIndex, int currentSegment, int[] ipAddressSegments, String rawIpString, List<String> restoredIps)
+        {
+            /*
+              If we have filled 4 segments (0, 1, 2, 3) and we are on the 4th,
+              we will only record an answer if the string was decomposed fully
+            */
+            if (currentSegment == 4 && progressIndex == rawIpString.Length)
+            {
+                restoredIps.Add(buildIpStringFromSegments(ipAddressSegments));
+            }
+            else if (currentSegment == 4)
+            {
+                return;
+            }
+
+            /*
+              Generate segments to try, a segment can be 1 to 3 digits long.
+            */
+            for (int segLength = 1; segLength <= 3 && progressIndex + segLength <= rawIpString.Length; segLength++)
+            {
+
+                // Calculate 1 index past where the segment ends index-wise in the original raw ip string
+                int onePastSegmentEnd = progressIndex + segLength;
+
+                // Extract int value from our snapshot from the raw ip string
+                String segmentAsString = rawIpString.Substring(progressIndex, onePastSegmentEnd);
+                int segmentValue = int.Parse(segmentAsString);
+
+                // Check the "snapshot's" validity - if invalid break iteration
+                if (segmentValue > 255 || segLength >= 2 && segmentAsString[0] == '0')
+                {
+                    break;
+                }
+
+                // Add the extracted segment to the working segments
+                ipAddressSegments[currentSegment] = segmentValue;
+
+                // Recurse on the segment choice - when finished & we come back here, the next loop iteration will try another segment
+                restoreIps(progressIndex + segLength, currentSegment + 1, ipAddressSegments, rawIpString, restoredIps);
+            }
+        }
+
+        // Helper Function for building IP address from Integer
+        private String buildIpStringFromSegments(int[] ipAddressSegments)
+        {
+            return ipAddressSegments[0] + "." + ipAddressSegments[1] + "." + ipAddressSegments[2] + "." + ipAddressSegments[3];
+        }
+
+        public List<List<int>> powerset(int[] inputSet)
+        {
+            var res = new List<List<int>>();
+            res.Add(new List<int>() { });
+
+            if (inputSet.Length == 0)
+                return res;
+
+            for (int i = 0; i < inputSet.Length; i++)
+            {
+                var superSubSetForCurrentItem = new List<List<int>>();
+                AddSuperSetForCurrent(inputSet, superSubSetForCurrentItem, i, new List<int>() { inputSet[i] });
+                res.AddRange(superSubSetForCurrentItem);
+            }
+
+            return res;
+
+        }
+
+        private void AddSuperSetForCurrent(int[] inputSet, List<List<int>> powerSet, int index, List<int> prefix)
+        {
+            powerSet.Add(prefix);
+
+            if (index < inputSet.Length)
+            {
+                for (int j = index + 1; j < inputSet.Length; j++)
+                {
+                    var localPrefix = new List<int>(prefix);
+                    localPrefix.Add(inputSet[j]);
+                    AddSuperSetForCurrent(inputSet, powerSet, j, localPrefix);
+                }
+            }
+        }
+
     }
 }

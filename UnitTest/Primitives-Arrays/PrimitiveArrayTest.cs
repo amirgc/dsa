@@ -75,5 +75,26 @@ namespace UnitTest.Primitives_Arrays
 
             Assert.Equal(50, res.val);
         }
+
+        [Fact]
+        public void TestMergeInterval()
+        {
+            var res = _primitives.mergeOverlappingIntervals(new int[2][] {
+            new int[]{ 1,2},
+            new int[] { 2,3}
+            });
+        }
+
+        [Fact]
+        public void TestRestoreIpAddress()
+        {
+            var res = _primitives.restoreIpAddresses("125523213");
+        }
+
+        [Fact]
+        public void TestPowerSet()
+        {
+            var res = _primitives.powerset(new int[] { 1, 2, 3 });
+        }
     }
 }
