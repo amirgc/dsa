@@ -42,21 +42,38 @@ namespace DataStrcutureAlgorithm
 
 
 
-            UnDirectedWeightedGraph g = new UnDirectedWeightedGraph();
-            g.InsertVertex("A");
-            g.InsertVertex("B");
-            g.InsertVertex("C");
-            g.InsertVertex("D");
-            g.InsertVertex("E");
+            //UnDirectedWeightedGraph g = new UnDirectedWeightedGraph();
+            //g.InsertVertex("A");
+            //g.InsertVertex("B");
+            //g.InsertVertex("C");
+            //g.InsertVertex("D");
+            //g.InsertVertex("E");
 
-            g.InsertEdge("A", "C", 3);
-            g.InsertEdge("B", "C", 10);
-            g.InsertEdge("B", "D", 4);
-            g.InsertEdge("C", "E", 6);
-            g.InsertEdge("C", "D", 2);
-            g.InsertEdge("D", "E", 1);
+            //g.InsertEdge("A", "C", 3);
+            //g.InsertEdge("B", "C", 10);
+            //g.InsertEdge("B", "D", 4);
+            //g.InsertEdge("C", "E", 6);
+            //g.InsertEdge("C", "D", 2);
+            //g.InsertEdge("D", "E", 1);
 
-            g.Prims();
+            //g.Prims();
+
+            //int[,] graph =  {   // A  B   C  D   E   F   G    H   I
+            //                     { 0, 6,  0, 0,  0,  0,  0,   9,  0 }, //A
+            //                     { 6, 0,  9, 0,  0,  0,  0,   11, 0 }, //B
+            //                     { 0, 9,  0, 5,  0,  6,  0,   0,  2 }, //C
+            //                     { 0, 0,  5, 0,  9,  16, 0,   0,  0 }, //D
+            //                     { 0, 0,  0, 9,  0,  10, 0,   0,  0 }, //E
+            //                     { 0, 0,  6, 0,  10, 0,  2,   0,  0 }, //F
+            //                     { 0, 0,  0, 16, 0,  2,  0,   1,  6 }, //G
+            //                     { 9, 11, 0, 0,  0,  0,  1,   0,  5 }, //H
+            //                     { 0, 0,  2, 0,  0,  0,  6,   5,  0 }  //I
+            //                };
+
+            //Dijkstra.DijkstraAlgo(graph, 0, 9);
+
+            DijkstraGraph g = new DijkstraGraph();
+            g.FindMinimumDistancePathBetweenNode();
 
             Console.Read();
         }
