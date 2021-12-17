@@ -610,5 +610,85 @@ namespace DataStrcutureAlgorithm.LeetCode
 
             return (int)res;
         }
+
+        //Definition for a binary tree node.
+        public class TreeNode
+        {
+            public int val;
+            public TreeNode left;
+            public TreeNode right;
+            public TreeNode(int x) { val = x; }
+        }
+        public IList<int> DistanceK(TreeNode root, TreeNode target, int k)
+        {
+            var nodesValFromTargetNode = new List<int>();
+            FindTheTargetNode(root, target, nodesValFromTargetNode, k);
+            return nodesValFromTargetNode;
+        }
+
+        private void FindNodeWithinKDistance(TreeNode node, List<int> nodesValFromTargetNode, int? distance)
+        {
+            if (node == null)
+                return;
+
+            if (distance == 0 && node != null)
+            {
+                nodesValFromTargetNode.Add(node.val);
+                return;
+            }
+
+            if (distance < 0)
+            {
+                return;
+            }
+
+            FindNodeWithinKDistance(node.left, nodesValFromTargetNode, distance - 1);
+            FindNodeWithinKDistance(node.right, nodesValFromTargetNode, distance - 1);
+        }
+
+        private int? FindTheTargetNode(TreeNode root, TreeNode targetNode, List<int> nodesValFromTargetNode, int distance)
+        {
+            if (root == null)
+                return null;
+
+            if (root != null && root.val == targetNode.val)
+            {
+                FindNodeWithinKDistance(targetNode, nodesValFromTargetNode, distance);
+                return distance - 1;
+            }
+
+            var res = FindTheTargetNode(root.left, targetNode, nodesValFromTargetNode, distance);
+
+            if (res != null)
+            {
+                if (res == 0)
+                {
+                    nodesValFromTargetNode.Add(root.val);
+                }
+                else
+                {
+                    FindNodeWithinKDistance(root.right, nodesValFromTargetNode, res - 1);
+                    return res - 1;
+                }
+            }
+            else
+            {
+                res = FindTheTargetNode(root.right, targetNode, nodesValFromTargetNode, distance);
+
+                if (res == 0)
+                {
+                    nodesValFromTargetNode.Add(root.val);
+                }
+                else
+                {
+                    FindNodeWithinKDistance(root.left, nodesValFromTargetNode, res - 1);
+                    return res - 1;
+                }
+            }
+
+            return null;
+
+        }
+
     }
 }

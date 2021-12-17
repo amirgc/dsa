@@ -100,7 +100,7 @@ namespace DataStrcutureAlgorithm.Algorithms
                 foreach (var items in node.AdjacentsNodesPathMaping)
                 {
                     var adjNode = nodes.Find(x => x.Name == items.Key);
-                    if (adjNode.MinDistance > node.MinDistance + items.Value)
+                    if (adjNode.MinDistance > node.MinDistance + items.Value && !adjNode.IsLocked)
                     {
                         adjNode.MinDistance = node.MinDistance + items.Value;
                         adjNode.Predecessor = node.Name;
