@@ -1,26 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
+﻿
 namespace DataStrcutureAlgorithm.DataStructures
 {
     // Priority Queue Implementation
-    public class PriorityQueueC
+    public class MaxHeap
     {
         int priotityQueueSize;
         int real_Size;
-        int[] min_Heap;
+        int[] max_Heap;
 
-        public PriorityQueueC(int size)
+        public MaxHeap(int size)
         {
             this.priotityQueueSize = size;
             real_Size = 0;
-            min_Heap = new int[this.priotityQueueSize + 1];
+            max_Heap = new int[this.priotityQueueSize + 1];
         }
 
         public int Peek()
         {
-            return min_Heap[1];
+            return max_Heap[1];
         }
 
         public void Add(int item)
@@ -33,16 +30,16 @@ namespace DataStrcutureAlgorithm.DataStructures
                 return;
             }
 
-            min_Heap[real_Size] = item;
+            max_Heap[real_Size] = item;
 
             int index = real_Size;
             int parent = index / 2;
 
-            while (min_Heap[parent] > min_Heap[index] && index > 1)
+            while (max_Heap[parent] < max_Heap[index] && index > 1)
             {
-                int temp = min_Heap[parent];
-                min_Heap[parent] = min_Heap[index];
-                min_Heap[index] = temp;
+                int temp = max_Heap[parent];
+                max_Heap[parent] = max_Heap[index];
+                max_Heap[index] = temp;
                 index = parent;
                 parent = index / 2;
             }
@@ -54,8 +51,9 @@ namespace DataStrcutureAlgorithm.DataStructures
             {
                 return int.MinValue;
             }
-            int min_val = min_Heap[1];
-            min_Heap[1] = min_Heap[real_Size];
+
+            int max_val = max_Heap[1];
+            max_Heap[1] = max_Heap[real_Size];
             real_Size--;
             int parent = 1;
 
@@ -63,20 +61,20 @@ namespace DataStrcutureAlgorithm.DataStructures
             {
                 int indexLeft = parent * 2;
                 int indexRight = (parent * 2) + 1;
-                if (min_Heap[parent] > min_Heap[indexLeft] || min_Heap[parent] > min_Heap[indexRight])
+                if (max_Heap[parent] < max_Heap[indexLeft] || max_Heap[parent] < max_Heap[indexRight])
                 {
-                    if (min_Heap[indexRight] > min_Heap[indexLeft])
+                    if (max_Heap[indexRight] < max_Heap[indexLeft])
                     {
-                        int temp = min_Heap[parent];
-                        min_Heap[parent] = min_Heap[indexLeft];
-                        min_Heap[indexLeft] = temp;
+                        int temp = max_Heap[parent];
+                        max_Heap[parent] = max_Heap[indexLeft];
+                        max_Heap[indexLeft] = temp;
                         parent = indexLeft;
                     }
-                    else 
+                    else
                     {
-                        int temp = min_Heap[parent];
-                        min_Heap[parent] = min_Heap[indexRight];
-                        min_Heap[indexRight] = temp;
+                        int temp = max_Heap[parent];
+                        max_Heap[parent] = max_Heap[indexRight];
+                        max_Heap[indexRight] = temp;
                         parent = indexRight;
                     }
                 }
@@ -86,7 +84,7 @@ namespace DataStrcutureAlgorithm.DataStructures
                 }
             }
 
-            return min_val;
+            return max_val;
         }
 
         public int GetHeapSize()

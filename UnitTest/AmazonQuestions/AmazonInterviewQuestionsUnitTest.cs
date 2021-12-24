@@ -144,7 +144,7 @@ namespace UnitTest.AmazonQuestions
 
         [Fact]
         void SumSubarrayMinsTestTry()
-        { 
+        {
             var test = new int[] { 2, 8, 9, 3, 4, 1 };
             var res = _amazonInterviewQuestions.SumSubarrayMins(test);
             Assert.Equal(63, res);
@@ -169,5 +169,58 @@ namespace UnitTest.AmazonQuestions
             var res = _amazonInterviewQuestions.reverseBits(1);
             Assert.Equal(1, res);
         }
+
+        [Fact]
+        void KClosestTest()
+        {
+            var points = new int[][] {new int[]{ 1,  3},
+                                      new int[]{-2,  2},
+                                      new int[]{ 2, -2 }
+                                     };
+            var res = _amazonInterviewQuestions.KClosest(points, 2);
+        }
+
+        [Fact]
+        void KClosestTestOne()
+        {
+            var points = new int[][] {new int[]{1, 3},
+                                      new int[]{-2, 2 }
+                                     };
+            var res = _amazonInterviewQuestions.KClosest(points, 1);
+        }
+
+        [Fact]
+        void OrangesRottingTest()
+        {
+            var points = new int[][] {new int[]{ 2,1,1},
+                                      new int[]{1,1,0},
+                                      new int[]{ 0, 1, 1 }
+                                     };
+            var res = _amazonInterviewQuestions.OrangesRotting(points);
+            Assert.Equal(4, res);
+        }
+
+        [Fact]
+        void OrangesRottingTestOne()
+        {
+            var points = new int[][] {new int[]{ 0,2}
+                                     };
+            var res = _amazonInterviewQuestions.OrangesRotting(points);
+            Assert.Equal(0, res);
+        }
+
+        [Fact]
+        void NumPairsDivisibleBy60()
+        {
+            var res = _amazonInterviewQuestions.NumPairsDivisibleBy60(new int[] { 30, 20, 150, 100, 40 });
+            Assert.Equal(3, res);
+        }
+        [Fact]
+        void NumPairsDivisibleBy60Test2()
+        {
+            var res = _amazonInterviewQuestions.NumPairsDivisibleBy60(new int[] { 60, 60, 60 });
+            Assert.Equal(3, res);
+        }
+
     }
 }

@@ -10,8 +10,6 @@ namespace DataStrcutureAlgorithm.Algorithms
         public int predecessor { get; set; }
         public int Length { get; set; }
         public string Name { get; set; }
-
-
     }
 
     public class UnDirectedWeightedGraph

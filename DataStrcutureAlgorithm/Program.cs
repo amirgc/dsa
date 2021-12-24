@@ -2,6 +2,7 @@
 using DataStrcutureAlgorithm.BTBSWE;
 using DataStrcutureAlgorithm.CrackingCodingInterview;
 using DataStrcutureAlgorithm.DataStructures;
+using DataStrcutureAlgorithm.LeetCode;
 using System;
 
 namespace DataStrcutureAlgorithm
@@ -72,8 +73,14 @@ namespace DataStrcutureAlgorithm
 
             //Dijkstra.DijkstraAlgo(graph, 0, 9);
 
-            DijkstraGraph g = new DijkstraGraph();
-            g.FindMinimumDistancePathBetweenNode();
+            //DijkstraGraph g = new DijkstraGraph();
+            //g.FindMinimumDistancePathBetweenNode();
+            var _amazonInterviewQuestions = new AmazonInterviewQuestions();
+            var points = new int[][] {new int[]{ 2,1,1},
+                                      new int[]{1,1,0},
+                                      new int[]{ 0, 1, 1 }
+                                     };
+            var res = _amazonInterviewQuestions.OrangesRotting(points);
 
             Console.Read();
         }

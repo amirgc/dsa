@@ -357,7 +357,7 @@ namespace DataStrcutureAlgorithm.LeetCode
             }
 
             // Min heap
-            MyPriorityQueue allocator = new MyPriorityQueue(intervals.Length);
+            PriorityQueueC allocator = new PriorityQueueC(intervals.Length);
 
             // Sort the intervals by start time
             Array.Sort(
@@ -690,5 +690,285 @@ namespace DataStrcutureAlgorithm.LeetCode
 
         }
 
+
+        public int[][] KClosest(int[][] points, int k)
+        {
+            var res = new int[k][];
+            Array.Sort(points, (a, b) => CalculateDistnace(a[0], a[1]) - CalculateDistnace(b[0], b[1]));
+
+            Array.Copy(points, res, k);
+            return res;
+        }
+
+        private int CalculateDistnace(int x, int y)
+        {
+            var hash = new HashSet<int>();
+            var ququ = new Queue<int>();
+            int a = ququ.Count();
+            return x * x + y * y;
+        }
+
+        public int OrangesRotting(int[][] grid)
+        {
+            var rottenOranges = new Queue<Tuple<int, int>>();
+            var totalOnes = 0;
+            for (int i = 0; i < grid.Length; i++)
+            {
+                for (int j = 0; j < grid[i].Length; j++)
+                {
+                    if (grid[i][j] == 2)
+                    {
+                        rottenOranges.Enqueue(new Tuple<int, int>(i, j));
+                    }
+                    else if (grid[i][j] == 1)
+                    {
+                        totalOnes++;
+                    }
+                }
+            }
+
+            if (totalOnes == 0)
+                return 0;
+
+            if (rottenOranges.Count == 0)
+                return -1;
+
+            int res = FindOutMinTimeToRotOranges(grid, rottenOranges, 0);
+
+            for (int i = 0; i < grid.Length; i++)
+            {
+                for (int j = 0; j < grid[i].Length; j++)
+                {
+                    if (grid[i][j] == 1)
+                    {
+                        return -1;
+                    }
+                }
+            }
+            return res;
+        }
+
+        private int FindOutMinTimeToRotOranges(int[][] grid, Queue<Tuple<int, int>> rottenOranges, int spentMinutes)
+        {
+            if (rottenOranges.Count == 0)
+                return spentMinutes - 1;
+
+            var newlyRottedOranges = new Queue<Tuple<int, int>>();
+
+            while (rottenOranges.Count > 0)
+            {
+                MakeAdjacenOrangestRotten(grid, rottenOranges.Dequeue(), newlyRottedOranges);
+            }
+
+            return FindOutMinTimeToRotOranges(grid, newlyRottedOranges, spentMinutes + 1);
+
+        }
+
+        private void MakeAdjacenOrangestRotten(int[][] grid, Tuple<int, int> point, Queue<Tuple<int, int>> rottenOranges)
+        {
+            int row = point.Item1;
+            int col = point.Item2;
+            int totalRows = grid.Length;
+            int rx, ry;
+            rx = row; ry = col + 1;
+            if (IsValidCell(grid, rx, ry))
+            {
+                grid[rx][ry] = 2;
+                rottenOranges.Enqueue(new Tuple<int, int>(rx, ry));
+            }
+
+            rx = row; ry = col - 1;
+            if (IsValidCell(grid, rx, ry))
+            {
+                grid[rx][ry] = 2;
+                rottenOranges.Enqueue(new Tuple<int, int>(rx, ry));
+            }
+
+            rx = row - 1; ry = col;
+            if (IsValidCell(grid, rx, ry))
+            {
+                grid[rx][ry] = 2;
+                rottenOranges.Enqueue(new Tuple<int, int>(rx, ry));
+            }
+
+            rx = row + 1; ry = col;
+            if (IsValidCell(grid, rx, ry))
+            {
+                grid[rx][ry] = 2;
+                rottenOranges.Enqueue(new Tuple<int, int>(rx, ry));
+            }
+
+        }
+
+        private bool IsValidCell(int[][] grid, int rx, int ry)
+        {
+            return rx >= 0 && ry >= 0 && rx < grid.Length && ry < grid[0].Length && grid[rx][ry] == 1;
+        }
+
+        public int NumPairsDivisibleBy60(int[] time)
+        {
+            int[] remainders = new int[60];
+            int count = 0;
+            foreach (int t in time)
+            {
+                if (t % 60 == 0)
+                { // check if a%60==0 && b%60==0
+                    count += remainders[0];
+                }
+                else
+                { // check if a%60+b%60==60
+                    count += remainders[60 - t % 60];
+                }
+                remainders[t % 60]++; // remember to update the remainders
+            }
+            return count;
+        }
+        public Boolean isRobotBounded(String instructions)
+        {
+            // north = 0, east = 1, south = 2, west = 3
+            int[][] directions = new int[][] { new int[] { 0, 1 }, new int[] { 1, 0 }, new int[] { 0, -1 }, new int[] { -1, 0 } };
+            // Initial position is in the center
+            int x = 0, y = 0;
+            // facing north
+            int idx = 0;
+            var a = int.MaxValue;
+
+            foreach (char i in instructions)
+            {
+                if (i == 'L')
+                    idx = (idx + 3) % 4;
+                else if (i == 'R')
+                    idx = (idx + 1) % 4;
+                else
+                {
+                    x += directions[idx][0];
+                    y += directions[idx][1];
+                }
+            }
+
+            // after one cycle:
+            // robot returns into initial position
+            // or robot doesn't face north
+            return (x == 0 && y == 0) || (idx != 0);
+        }
+
+        public int MinSwaps(int[] data)
+        {
+            Array.Sort(data);
+            int ones = data.Sum();
+            int cnt_one = 0, max_one = 0;
+            int left = 0, right = 0;
+            var dictTimeStampMaping = new Dictionary<int, List<int>>();
+            while (right < data.Length)
+            {
+                // updating the number of 1's by adding the new element
+                cnt_one += data[right++];
+                // maintain the length of the window to ones
+                if (right - left > ones)
+                {
+                    // updating the number of 1's by removing the oldest element
+                    cnt_one -= data[left++];
+                }
+                // record the maximum number of 1's in the window
+                max_one = Math.Max(max_one, cnt_one);
+            }
+            return ones - max_one;
+        }
+
+        public class Pair
+        {
+            public int TimeStamp { get; set; }
+            public string Website { get; set; }
+
+        }
+
+        public List<String> mostVisitedPattern(String[] username, int[] timestamp, String[] website)
+        {
+            Dictionary<String, List<Pair>> map = new Dictionary<String, List<Pair>>();
+            int n = username.Length;
+            // collect the website info for every user, key: username, value: (timestamp, website)
+            for (int i = 0; i < n; i++)
+            {
+                if (!map.ContainsKey(username[i]))
+                    map.Add(username[i], new List<Pair>());
+                map[username[i]].Add(new Pair() { TimeStamp = timestamp[i], Website = website[i] });
+            }
+
+            // count map to record every 3 combination occuring time for the different user.
+            Dictionary<String, int> count = new Dictionary<String, int>();
+
+            String res = "";
+            foreach (var keyvalue in map)
+            {
+                HashSet<String> set = new HashSet<String>();
+                // this set is to avoid visit the same 3-seq in one user
+                keyvalue.Value.Sort((a, b) => a.TimeStamp - b.TimeStamp);// sort by time
+                var list = keyvalue.Value;                              // brutal force O(N ^ 3)
+                for (int i = 0; i < list.Count; i++)
+                {
+                    for (int j = i + 1; j < list.Count; j++)
+                    {
+                        for (int k = j + 1; k < list.Count; k++)
+                        {
+                            String str = list[i].Website + " " + list[j].Website + " " + list[k].Website;
+                            if (!set.Contains(str))
+                            {
+                                if (!count.ContainsKey(str))
+                                {
+                                    count.Add(str, 0);
+                                }
+                                count[str] += 1;
+                                set.Add(str);
+                            }
+
+                            if (res.Equals("") || count[res] < count[str] ||
+                                    (count[res] == count[str] &&
+                                    res.CompareTo(str) > 0))
+                            {
+                                // make sure the right lexi order
+                                res = str;
+                            }
+                        }
+                    }
+                }
+            }
+
+            // grab the right answer
+            String[] r = res.Split(" ");
+            List<String> result = new List<string>();
+            foreach (String str in r)
+            {
+                result.Add(str);
+            }
+
+            return result;
+        }
+
+        public int connectSticks(int[] sticks)
+        {
+            int totalCost = 0;
+
+            PriorityQueueC pq = new PriorityQueueC(sticks.Length);
+
+            // add all sticks to the min heap.
+            foreach (int stick in sticks)
+            {
+                pq.Add(stick);
+            }
+
+            //// combine two of the smallest sticks until we are left with just one.
+            while (pq.GetHeapSize() > 1)
+            {
+                int stick1 = pq.Poll();
+                int stick2 = pq.Poll();
+
+                int cost = stick1 + stick2;
+                totalCost += cost;
+
+                pq.Add(stick1 + stick2);
+            }
+
+            return totalCost;
+        }
     }
 }
