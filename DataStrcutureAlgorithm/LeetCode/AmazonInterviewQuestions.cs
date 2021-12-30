@@ -970,5 +970,91 @@ namespace DataStrcutureAlgorithm.LeetCode
 
             return totalCost;
         }
+
+        public int MaxEvents(int[][] events)
+        {
+            Array.Sort(events, (a, b) => a[1] - b[1]);
+            var daysEventsMap = new int[events[events.Length - 1][1] + 1];
+            var totalEventsThatCanBeAttended = 0;
+
+            for (int i = 0; i < events.Length; i++)
+            {
+                for (int j = events[i][0]; j <= events[i][1]; j++)
+                {
+                    if (daysEventsMap[j] == 0)
+                    {
+                        totalEventsThatCanBeAttended++;
+                        daysEventsMap[j] = 1;
+                        break;
+                    }
+                }
+            }
+            var dict = new HashSet<string>();
+            return totalEventsThatCanBeAttended;
+        }
+
+        public class Trie
+        {
+            public Node Root, curr;
+
+            public Trie()
+            {
+                Root = new Node();
+            }
+
+            public class Node
+            {
+                public Dictionary<char, Node> children { get; set; } = new Dictionary<char, Node>();
+            };
+
+            public void insert(string s)
+            {
+                // Points curr to the root of trie.
+                curr = Root;
+                foreach (char c in s)
+                {
+                    if (!curr.children.ContainsKey(c))
+                        curr.children.Add(c, new Node());
+
+                    curr = curr.children[c];
+                }
+            }
+
+            public string DepthFirstSearch(Node currRoot, string str)
+            {
+                if (str.Length == 0)
+                    return null;
+
+                char ch = str[0];
+
+                if (currRoot.children.ContainsKey(ch))
+                {
+                    currRoot = currRoot.children[ch];
+                    return DepthFirstSearch(currRoot, str.Substring(1));
+                }
+
+                return str;
+            }
+        }
+
+        public bool WordBreak(string s, IList<string> wordDict)
+        {
+            var dict = new Trie();
+            foreach (var word in wordDict)
+            {
+                dict.insert(word);
+            }
+            var newValue = s;
+            var oldValue = s;
+
+            do
+            {
+                oldValue = newValue;
+                newValue = dict.DepthFirstSearch(dict.Root, oldValue);
+            } while (oldValue != newValue && newValue != null);
+
+            return newValue == null;
+        }
+
     }
 }

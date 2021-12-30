@@ -14,7 +14,7 @@ namespace DataStrcutureAlgorithm.DataStructures
             // Node definition of a trie
             public class Node
             {
-                public Boolean isWord { get; set; }
+                public bool isWord { get; set; }
                 public List<Node> children { get; set; } = new List<Node>(new Node[26]);
             };
 
