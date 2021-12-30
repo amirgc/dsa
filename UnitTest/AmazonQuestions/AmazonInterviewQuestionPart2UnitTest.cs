@@ -12,17 +12,19 @@ namespace UnitTest.AmazonQuestions
         private readonly TrieSearch trieSearch;
         private readonly AmazonInterviewQuestions amazonInterviewQuestions;
         private readonly TreeBuilder treeBuilder;
+        private readonly ShortestPathGetFood shortestPathGetFood;
         public AmazonInterviewQuestionPart2UnitTest()
         {
             trieSearch = new TrieSearch();
             amazonInterviewQuestions = new AmazonInterviewQuestions();
             treeBuilder = new TreeBuilder();
+            shortestPathGetFood = new ShortestPathGetFood();
         }
 
         [Fact]
         public void TreeBuildertest()
         {
-            var test=treeBuilder.buildTree(new string[] { "3", "4", "+", "2", "*", "7", "/" });
+            var test = treeBuilder.buildTree(new string[] { "3", "4", "+", "2", "*", "7", "/" });
             var res = test.evaluate();
 
             Assert.Equal(2, res);
@@ -53,6 +55,41 @@ namespace UnitTest.AmazonQuestions
             var res = amazonInterviewQuestions.WordBreak("applepenapple", new List<string>() { "apple", "pen" });
 
             Assert.True(res);
+        }
+        [Fact]
+        public void testMaxProfit()
+        {
+            var res = amazonInterviewQuestions.MaxProfit(new int[] { 2, 5 }, 4);
+            Assert.Equal(14, res);
+        }
+
+        [Fact]
+        public void ShortestPathGetFoodTest()
+        {
+            var grid = new char[][]
+            {
+                new char[]{'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X'},
+                new char[]{'X', '*', 'O', 'X', 'O', '#', 'O', 'X'},
+                new char[]{'X', 'O', 'O', 'X', 'O', 'O', 'X', 'X'},
+                new char[]{'X', 'O', 'O', 'O', 'O', '#', 'O', 'X'},
+                new char[]{'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X'}
+
+            };
+            var res = shortestPathGetFood.GetFood(grid);
+            Assert.Equal(6, res);
+        }
+
+        [Fact]
+        public void ShortestPathGetFoodTestTwo()
+        {
+            var grid = new char[][]
+            {
+                new char[]{'O', '*'},
+                new char[]{'#', 'O'},
+
+            };
+            var res = shortestPathGetFood.GetFood(grid);
+            Assert.Equal(1, res);
         }
     }
 }

@@ -1056,5 +1056,24 @@ namespace DataStrcutureAlgorithm.LeetCode
             return newValue == null;
         }
 
+        public int MaxProfit(int[] inventory, int orders)
+        {
+            int mod = (int)(Math.Pow(10, 9) + 7);
+            var maxHeap = new MaxHeap(inventory.Length);
+            int res = 0;
+            for (int i = 0; i < inventory.Length; i++)
+            {
+                maxHeap.Add(inventory[i]);
+            }
+
+            while (orders > 0)
+            {
+                var maxItem = maxHeap.Poll();
+                res = (res + maxItem) % mod;
+                maxHeap.Add(maxItem - 1);
+                orders--;
+            }
+            return res;
+        }
     }
 }

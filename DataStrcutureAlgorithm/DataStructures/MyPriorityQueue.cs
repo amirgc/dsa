@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace DataStrcutureAlgorithm.DataStructures
+﻿namespace DataStrcutureAlgorithm.DataStructures
 {
     // Priority Queue Implementation
     public class PriorityQueueC
