@@ -26,7 +26,10 @@ namespace DataStrcutureAlgorithm.UnitTest.DataStructures
         [Fact]
         public void QuickSortTest()
         {
-            var res = mergeSort.quicksort(new int[] { 11, 7, 9, 2, 1, 8, 5 });
+            //var res = mergeSort.quicksort(new int[] { 11, 7, 9, 2, 1, 8, 5 });
+            //Assert.Equal(res, new int[] { 1, 2, 5, 7, 8, 9, 11 });
+
+            var res = mergeSort.quicksort(new int[] { 4, 2, 7, 3, 1 });
             Assert.Equal(res, new int[] { 1, 2, 5, 7, 8, 9, 11 });
         }
         [Fact]
