@@ -33,5 +33,59 @@ namespace DataStrcutureAlgorithm.LeetCode
             return totalSum;
         }
 
+        public int LengthOfLongestSubstring(string s)
+        {
+            var dict = new HashSet<char>();
+            int res = 0;
+            int tempHigh = 0;
+
+            foreach (char ch in s)
+            {
+                if (!dict.Contains(ch))
+                {
+                    dict.Add(ch);
+                    tempHigh++;
+                }
+                else
+                {
+                    res = Math.Max(res, tempHigh);
+                    tempHigh = 0;
+                }
+            }
+
+            return res;
+        }
+
+        public IList<IList<int>> ThreeSum(int[] nums)
+        {
+            var res = new List<IList<int>>();
+            Array.Sort(nums);
+            for (int i = 0; i < nums.Length && nums[i] <= 0; i++)
+            {
+                if (i == 0 || nums[i - 1] != nums[i])
+                {
+                    twoSumII(nums, i, res);
+                }
+            }
+
+            return res;
+        }
+
+        private void twoSumII(int[] nums, int i, List<IList<int>> res)
+        {
+            int lo = i + 1, hi = nums.Length - 1;
+            while (lo < hi)
+            {
+                int sum = nums[i] + nums[lo] + nums[hi];
+                if (sum < 0) lo++;
+                else if (sum > 0) hi--;
+                else
+                {
+                    res.Add(new List<int>() { nums[i], nums[lo++], nums[hi--] });
+                    while (lo < hi && nums[lo] == nums[lo - 1])
+                        lo++;
+                }
+            }
+        }
     }
 }

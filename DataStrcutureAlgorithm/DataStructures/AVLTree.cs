@@ -54,7 +54,7 @@ namespace DataStrcutureAlgorithm.DataStructures
                 }
                 else
                 {
-                    node = RotateLeft(node);
+                    node = RotateLeftRight(node);
                 }
             }
             else if (balance < -threshold)
@@ -71,6 +71,13 @@ namespace DataStrcutureAlgorithm.DataStructures
             return node;
         }
 
+        private AVLTreeNode RotateLeftRight(AVLTreeNode node)
+        {
+            node.Left = RotateLeft(node.Left);
+            return RotateRight(node);
+
+        }
+
         private AVLTreeNode RotateRightLeft(AVLTreeNode node)
         {
             throw new NotImplementedException();
@@ -83,7 +90,13 @@ namespace DataStrcutureAlgorithm.DataStructures
 
         private AVLTreeNode RotateRight(AVLTreeNode node)
         {
-            throw new NotImplementedException();
+            AVLTreeNode leftTemp = node.Left;
+            node.Left = leftTemp.Right;
+            leftTemp.Right = node;
+            node.Height = 1 + Math.Max(GetHeight(leftTemp.Left), GetHeight(leftTemp.Right));
+            leftTemp.Height = 1 + Math.Max(GetHeight(node.Left), GetHeight(node.Right));
+
+            return leftTemp;
         }
 
         private int GetHeight(AVLTreeNode node)

@@ -215,12 +215,6 @@ namespace UnitTest.AmazonQuestions
             var res = _amazonInterviewQuestions.NumPairsDivisibleBy60(new int[] { 30, 20, 150, 100, 40 });
             Assert.Equal(3, res);
         }
-        [Fact]
-        void NumPairsDivisibleBy60Test2()
-        {
-            var res = _amazonInterviewQuestions.NumPairsDivisibleBy60(new int[] { 60, 60, 60 });
-            Assert.Equal(3, res);
-        }
 
     }
 }

@@ -11,6 +11,7 @@ namespace UnitTest.AmazonQuestions
     {
         private readonly TrieSearch trieSearch;
         private readonly AmazonInterviewQuestions amazonInterviewQuestions;
+        private readonly AmazonInterViewPart2 amazonInterViewPart2;
         private readonly TreeBuilder treeBuilder;
         private readonly ShortestPathGetFood shortestPathGetFood;
         public AmazonInterviewQuestionPart2UnitTest()
@@ -19,6 +20,7 @@ namespace UnitTest.AmazonQuestions
             amazonInterviewQuestions = new AmazonInterviewQuestions();
             treeBuilder = new TreeBuilder();
             shortestPathGetFood = new ShortestPathGetFood();
+            amazonInterViewPart2 = new AmazonInterViewPart2();
         }
 
         [Fact]
@@ -79,17 +81,17 @@ namespace UnitTest.AmazonQuestions
             Assert.Equal(6, res);
         }
 
+       
+        //[[-1,-1,2],[-1,0,1]]
         [Fact]
-        public void ShortestPathGetFoodTestTwo()
+        public void ThreeSumTes()
         {
-            var grid = new char[][]
-            {
-                new char[]{'O', '*'},
-                new char[]{'#', 'O'},
+            var res = amazonInterViewPart2.ThreeSum(new int[] { -1, 0, 1, 2, -1, -4 });
+            Assert.Equal(new List<List<int>>() {
+                new List<int>() { -1, -1, 2 },
+                new List<int>() { -1, 0, 1 }
 
-            };
-            var res = shortestPathGetFood.GetFood(grid);
-            Assert.Equal(1, res);
+            }, res);
         }
     }
 }

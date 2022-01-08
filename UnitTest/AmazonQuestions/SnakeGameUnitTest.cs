@@ -34,20 +34,5 @@ namespace UnitTest.AmazonQuestions
             Assert.Equal(4, res);
         }
 
-        [Fact]
-        void TestSnakeGame1()
-        {
-            var obj = new SnakeGame();
-
-            var testSets = new int[][]
-            {
-                    new int[]{-1, -1 },
-                    new int[]{-1, 3 }
-            };
-
-            var res = obj.SnakesAndLadders(testSets);
-
-            Assert.Equal(4, res);
-        }
     }
 }
