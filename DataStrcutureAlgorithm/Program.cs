@@ -75,14 +75,24 @@ namespace DataStrcutureAlgorithm
 
             //DijkstraGraph g = new DijkstraGraph();
             //g.FindMinimumDistancePathBetweenNode();
-            var _amazonInterviewQuestions = new AmazonInterviewQuestions();
-            var points = new int[][] {new int[]{ 2,1,1},
-                                      new int[]{1,1,0},
-                                      new int[]{ 0, 1, 1 }
-                                     };
-            var res = _amazonInterviewQuestions.OrangesRotting(points);
+            //var _amazonInterviewQuestions = new AmazonInterviewQuestions();
+            //var points = new int[][] {new int[]{ 2,1,1},
+            //                          new int[]{1,1,0},
+            //                          new int[]{ 0, 1, 1 }
+            //                         };
+            //var res = _amazonInterviewQuestions.OrangesRotting(points);
 
+            var ob = new AmazonInterViewPart2();
+            var testCase = new int[][]
+            {
+                new int[]{ 1,2,3,4,5},
+                new int[]{6,7,8,9,10 },
+                new int[]{11,12,13,14,15 },
+                new int[]{16,17,18,19,20 },
+                new int[]{21,22,23,24,25 },
+            };
 
+            ob.Rotate(testCase);
             Console.Read();
         }
     }

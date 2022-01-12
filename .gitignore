@@ -10,3 +10,4 @@
 /UnitTest/bin/Debug/netcoreapp3.1
 /DataStrcutureAlgorithm/obj
 /UnitTest/obj
+*.testlog

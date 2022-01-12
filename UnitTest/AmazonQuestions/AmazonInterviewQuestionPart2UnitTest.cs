@@ -81,7 +81,7 @@ namespace UnitTest.AmazonQuestions
             Assert.Equal(6, res);
         }
 
-       
+
         //[[-1,-1,2],[-1,0,1]]
         [Fact]
         public void ThreeSumTes()
@@ -92,6 +92,59 @@ namespace UnitTest.AmazonQuestions
                 new List<int>() { -1, 0, 1 }
 
             }, res);
+        }
+
+        [Fact]
+        public void SearchRotated()
+        {
+            var res = amazonInterViewPart2.Search(new int[] { 4, 5, 6, 7, 0, 1, 2 }, 0);
+            Assert.Equal(4, res);
+        }
+
+        [Fact]
+        public void RotateMatrixTest()
+        {
+            var testCase = new int[][]
+            {
+                new int[]{ 1,2,3,4,5},
+                new int[]{6,7,8,9,10 },
+                new int[]{11,12,13,14,15 },
+                new int[]{16,17,18,19,20 },
+                new int[]{21,22,23,24,25 },
+            };
+
+            amazonInterViewPart2.Rotate(testCase);
+
+        }
+
+        [Fact]
+        public void CanJumpTest()
+        {
+            amazonInterViewPart2.CanJump(new int[] { 1, 1, 1, 0 });
+
+        }
+
+
+        [Fact]
+        public void InsetTest()
+        {  //
+            amazonInterViewPart2.Insert(new int[][] {
+                                                     new int[]{1,2},
+                                                     new int[]{3,5},
+                                                     new int[]{6,7},
+                                                     new int[]{8,10},
+                                                     new int[]{12,16}
+                                                 },
+                                                 new int[] { 4, 8 });
+
+        }
+
+        [Fact]
+        public void UniquePathsTest()
+        {  //
+            var res = amazonInterViewPart2.UniquePaths(7, 3);
+            Assert.Equal(28, res);
+
         }
     }
 }
