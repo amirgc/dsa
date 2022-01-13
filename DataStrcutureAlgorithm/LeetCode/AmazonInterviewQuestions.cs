@@ -107,100 +107,51 @@ namespace DataStrcutureAlgorithm.LeetCode
         }
 
         #region Exist Word Amazon Question
-        HashSet<string> hashSet;
-        public bool Exist(char[][] board, string word)
+        private char[][] board;
+        private int ROWS;
+        private int COLS;
+
+        public Boolean Exist(char[][] board, String word)
         {
-            int row = board.Length;
-            int column = board[0].Length;
+            this.board = board;
+            this.ROWS = board.Length;
+            this.COLS = board[0].Length;
 
-            int counter = row * column;
-
-            for (int i = 0; i < counter; i++)
-            {
-                var currRow = i / column;
-                var currCol = i % column;
-                hashSet = new HashSet<string>();
-
-                if (board[currRow][currCol] == word[0])
-                {
-                    if (Exist(board, word, row, column, currRow, currCol))
-                    {
+            for (int row = 0; row < this.ROWS; ++row)
+                for (int col = 0; col < this.COLS; ++col)
+                    if (this.backtrack(row, col, word, 0))
                         return true;
-                    }
-                }
-            }
-
             return false;
         }
 
-        public bool Exist(char[][] board, string word, int row, int column, int locx, int locy)
+        protected Boolean backtrack(int row, int col, String word, int index)
         {
-            if (word.Length == 1)
-            {
+            /* Step 1). check the bottom case. */
+            if (index >= word.Length)
                 return true;
-            }
 
-            hashSet.Add($"{locx}-{locy}");
-
-            var locationsNextCharTupples = GetAllVerticesWithNextCharacter(row, column, locx, locy, word[1], board);
-
-            foreach (var nextLocation in locationsNextCharTupples)
-            {
-                var found = Exist(board, word.Substring(1), row, column, nextLocation.Item1, nextLocation.Item2);
-
-                if (found)
-                {
-                    return true;
-                }
-            }
-            hashSet.Remove($"{locx}-{locy}");
-            return false;
-        }
-
-        private List<Tuple<int, int>> GetAllVerticesWithNextCharacter(int row, int col, int locx, int locy, char ch,
-            char[][] board)
-        {
-            List<Tuple<int, int>> tuples = new List<Tuple<int, int>>();
-
-            if (isValidVertex(row, col, locx + 1, locy) && ch == board[locx + 1][locy])
-            {
-                var currentTuple = new Tuple<int, int>(locx + 1, locy);
-                tuples.Add(currentTuple);
-            }
-
-            if (isValidVertex(row, col, locx - 1, locy) && ch == board[locx - 1][locy])
-            {
-                var currentTuple = new Tuple<int, int>(locx - 1, locy);
-                tuples.Add(currentTuple);
-            }
-
-            if (isValidVertex(row, col, locx, locy + 1) && ch == board[locx][locy + 1])
-            {
-                var currentTuple = new Tuple<int, int>(locx, locy + 1);
-                tuples.Add(currentTuple);
-            }
-
-            if (isValidVertex(row, col, locx, locy - 1) && ch == board[locx][locy - 1])
-            {
-                var currentTuple = new Tuple<int, int>(locx, locy - 1);
-                tuples.Add(currentTuple);
-            }
-
-            return tuples;
-        }
-
-        private bool isValidVertex(int row, int col, int locx, int locy)
-        {
-            if (hashSet.Contains($"{locx}-{locy}"))
+            /* Step 2). Check the boundaries. */
+            if (row < 0 || row == this.ROWS || col < 0 || col == this.COLS
+                || this.board[row][col] != word[index])
                 return false;
 
-            if (!(locx < row && locx >= 0))
-                return false;
+            /* Step 3). explore the neighbors in DFS */
+            Boolean ret = false;
+            // mark the path before the next exploration
+            this.board[row][col] = '#';
 
-            if (!(locy < col && locy >= 0))
-                return false;
+            int[] rowOffsets = { 0, 1, 0, -1 };
+            int[] colOffsets = { 1, 0, -1, 0 };
+            for (int d = 0; d < 4; ++d)
+            {
+                ret = this.backtrack(row + rowOffsets[d], col + colOffsets[d], word, index + 1);
+                if (ret)
+                    break;
+            }
 
-            return true;
+            /* Step 4). clean up and return the result. */
+            this.board[row][col] = word[index];
+            return ret;
         }
 
         #endregion

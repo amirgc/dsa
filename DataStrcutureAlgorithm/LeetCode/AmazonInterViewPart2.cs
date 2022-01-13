@@ -299,7 +299,7 @@ namespace DataStrcutureAlgorithm.LeetCode
 
             //bottom
             tx = x;
-            ty = y - 1;
+            ty = y + 1;
             if (IsValidCordinate(tx, ty, m, n, map))
                 res.Add(new Tuple<int, int>(tx, ty));
 
@@ -316,5 +316,250 @@ namespace DataStrcutureAlgorithm.LeetCode
 
             return true;
         }
+
+        public int uniquePaths1(int m, int n)
+        {
+            int[][] d = new int[m][];
+
+            for (int i = 0; i < m; i++)
+            {
+                d[i] = new int[n];
+                Array.Fill(d[i], 1);
+            }
+            for (int col = 1; col < m; ++col)
+            {
+                for (int row = 1; row < n; ++row)
+                {
+                    d[col][row] = d[col - 1][row] + d[col][row - 1];
+                }
+            }
+            return d[m - 1][n - 1];
+        }
+
+        public void SetZeroes(int[][] matrix)
+        {
+            var rows = new HashSet<int>();
+            var cols = new HashSet<int>();
+            string a = "amamd";
+            a = a.Substring(0, a.Length - 1);
+            for (int i = 0; i < matrix.Length; i++)
+            {
+                for (int j = 0; j < matrix[i].Length; j++)
+                {
+                    if (matrix[i][j] == 0)
+                    {
+                        rows.Add(i);
+                        cols.Add(j);
+                    }
+                }
+            }
+
+            for (int i = 0; i < matrix.Length; i++)
+            {
+                if (rows.Contains(i))
+                {
+                    matrix[i] = new int[matrix[i].Length];
+                }
+                else
+                {
+                    for (int j = 0; j < matrix[i].Length; j++)
+                    {
+                        if (cols.Contains(j))
+                        {
+                            matrix[i][j] = 0;
+                        }
+                    }
+                }
+            }
+        }
+
+        string substring = "";
+        HashSet<string> subset;
+        public string MinWindow(string s, string t)
+        {
+            subset = new HashSet<string>();
+            GetSubstring(s, t);
+            return substring;
+        }
+
+        public void GetSubstring(string s, string t)
+        {
+            if (s.Length < t.Length)
+                return;
+
+            if (ContainsWord(s, t))
+            {
+                if (substring.Length > s.Length || substring.Length == 0)
+                {
+                    substring = s;
+                }
+            }
+
+            subset.Add(s);
+            if (!subset.Contains(s.Substring(1)))
+                GetSubstring(s.Substring(1), t);
+
+            if (!subset.Contains(s.Substring(0, s.Length - 1)))
+                GetSubstring(s.Substring(0, s.Length - 1), t);
+        }
+
+        public bool ContainsWord(string s, string t)
+        {
+            var sn = convertWordToInt(s);
+            var tn = convertWordToInt(t);
+            for (int i = 0; i < 26; i++)
+            {
+                if (tn[i] > 0 && sn[i] < tn[i])
+                    return false;
+            }
+
+            return true;
+        }
+
+        private int[] convertWordToInt(string s)
+        {
+            var res = new int[26];
+            s = s.ToLower();
+            foreach (char ch in s)
+            {
+                res[ch - 'a'] += 1;
+            }
+            return res;
+        }
+
+        public string minWindow(string s, string t)
+        {
+
+            if (s.Length == 0 || t.Length == 0)
+            {
+                return "";
+            }
+
+            // Dictionary which keeps a count of all the unique characters in t.
+            Dictionary<char, int> dictT = new Dictionary<char, int>();
+            for (int i = 0; i < t.Length; i++)
+            {
+                if (!dictT.ContainsKey(t[i]))
+                {
+                    dictT.Add(t[i], 0);
+                }
+                dictT[t[i]] += 1;
+            }
+
+            // Number of unique characters in t, which need to be present in the desired window.
+            int required = dictT.Count;
+
+            // Left and Right pointer
+            int l = 0, r = 0;
+
+            // formed is used to keep track of how many unique characters in t
+            // are present in the current window in its desired frequency.
+            // e.g. if t is "AABC" then the window must have two A's, one B and one C.
+            // Thus formed would be = 3 when all these conditions are met.
+            int formed = 0;
+
+            // Dictionary which keeps a count of all the unique characters in the current window.
+            Dictionary<char, int> windowCounts = new Dictionary<char, int>();
+
+            // ans list of the form (window length, left, right)
+            int[] ans = { -1, 0, 0 };
+
+            while (r < s.Length)
+            {
+                // Add one character from the right to the window
+                char c = s[r];
+
+                if (!windowCounts.ContainsKey(c))
+                {
+                    windowCounts.Add(c, 0);
+                }
+                windowCounts[c] += 1;
+
+                // If the frequency of the current character added equals to the
+                // desired count in t then increment the formed count by 1.
+                if (dictT.ContainsKey(c) && windowCounts[c] == dictT[c])
+                {
+                    formed++;
+                }
+
+                // Try and contract the window till the point where it ceases to be 'desirable'.
+                while (l <= r && formed == required)
+                {
+                    c = s[l];
+                    // Save the smallest window until now.
+                    if (ans[0] == -1 || r - l + 1 < ans[0])
+                    {
+                        ans[0] = r - l + 1;
+                        ans[1] = l;
+                        ans[2] = r;
+                    }
+
+                    // The character at the position pointed by the
+                    // `Left` pointer is no longer a part of the window.
+                    //windowCounts.Add(c, windowCounts[c] - 1);
+                    windowCounts[c] -= 1;
+                    if (dictT.ContainsKey(c) && windowCounts[c] < dictT[c])
+                    {
+                        formed--;
+                    }
+
+                    // Move the left pointer ahead, this would help to look for a new window.
+                    l++;
+                }
+
+                // Keep expanding the window once we are done contracting.
+                r++;
+            }
+
+            return ans[0] == -1 ? "" : s.Substring(ans[1], s.Length - ans[1]);
+        }
+
+        Dictionary<int, int> memo = new Dictionary<int, int>();
+
+        public int numDecodings(String s)
+        {
+            return recursiveWithMemo(0, s);
+        }
+
+        private int recursiveWithMemo(int index, String str)
+        {
+            // Have we already seen this substring?
+            if (memo.ContainsKey(index))
+            {
+                return memo[index];
+            }
+
+            // If you reach the end of the string
+            // Return 1 for success.
+            if (index == str.Length)
+            {
+                return 1;
+            }
+
+            // If the string starts with a zero, it can't be decoded
+            if (str[index] == '0')
+            {
+                return 0;
+            }
+
+            if (index == str.Length - 1)
+            {
+                return 1;
+            }
+
+
+            int ans = recursiveWithMemo(index + 1, str);
+            
+            if (int.Parse(str.Substring(index, 2)) <= 26)
+            {
+                ans += recursiveWithMemo(index + 2, str);
+            }
+
+            // Save for memoization
+            memo.Add(index, ans);
+
+            return ans;
+        }
+
     }
 }

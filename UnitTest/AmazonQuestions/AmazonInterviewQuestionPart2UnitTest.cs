@@ -146,5 +146,35 @@ namespace UnitTest.AmazonQuestions
             Assert.Equal(28, res);
 
         }
+
+        [Fact]
+        public void SetZerosTest()
+        {  //[[0,1,2,0],[3,4,5,2],[1,3,1,5]]
+            var testcase = new int[3][]{
+             new int[]{0,1,2,0 },
+             new int[]{ 3,4,5,2},
+             new int[]{1,3,1,5 },
+            };
+            amazonInterViewPart2.SetZeroes(testcase);
+
+        }
+
+        [Fact]
+        public void MinimumWindowTest()
+        {  //"ADOBECODEBANC"
+            //"ABC"
+            var res = amazonInterViewPart2.minWindow("ADOBECODEBANC", "ABC");
+            Assert.Equal("BANC", res);
+
+        }
+
+        [Fact]
+        public void DecodeTest()
+        {  //"ADOBECODEBANC"
+            //"ABC"
+            var res = amazonInterViewPart2.NumDecodings("12");
+            Assert.Equal(2, res);
+
+        }
     }
 }
