@@ -1,6 +1,7 @@
 ﻿using DataStrcutureAlgorithm.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace DataStrcutureAlgorithm.LeetCode
@@ -535,7 +536,6 @@ namespace DataStrcutureAlgorithm.LeetCode
             {
                 return 1;
             }
-
             // If the string starts with a zero, it can't be decoded
             if (str[index] == '0')
             {
@@ -546,10 +546,10 @@ namespace DataStrcutureAlgorithm.LeetCode
             {
                 return 1;
             }
-
+            //Char.IsLetterOrDigit('8')
 
             int ans = recursiveWithMemo(index + 1, str);
-            
+
             if (int.Parse(str.Substring(index, 2)) <= 26)
             {
                 ans += recursiveWithMemo(index + 2, str);
@@ -560,6 +560,135 @@ namespace DataStrcutureAlgorithm.LeetCode
 
             return ans;
         }
+        public int LongestConsecutive(int[] nums)
+        {
+
+            var num_set = new HashSet<int>();
+            foreach (int num in nums)
+            {
+                num_set.Add(num);
+            }
+
+            int longestSteak = 0;
+
+            for (int i = 0; i < nums.Length; i++)
+            {
+                int tempLongestSteak = 0;
+                int num = nums[i];
+
+                while (num_set.Contains(num))
+                {
+                    tempLongestSteak += 1;
+                    num_set.Remove(num);
+                    num += 1;
+                }
+
+                num = nums[i] - 1;
+                while (num_set.Contains(num))
+                {
+                    tempLongestSteak += 1;
+                    num_set.Remove(num);
+                    num -= 1;
+                }
+                longestSteak = Math.Max(tempLongestSteak, longestSteak);
+            }
+
+            return longestSteak;
+        }
+        Dictionary<char, List<string>> collection = new Dictionary<char, List<string>>();
+        public bool WordBreak(string s, IList<string> wordDict)
+        {
+            foreach (var str in wordDict)
+            {
+                if (!collection.ContainsKey(str[0]))
+                {
+                    collection.Add(str[0], new List<string>());
+                }
+
+                collection[str[0]].Add(str);
+            }
+            return startWorkSearch(s);
+        }
+
+        private bool startWorkSearch(string str)
+        {
+            if (string.IsNullOrEmpty(str))
+                return true;
+
+            if (!collection.ContainsKey(str[0]))
+                return false;
+
+            var list = collection[str[0]].OrderByDescending(x => x);
+
+            foreach (string s in list)
+            {
+                if (str.Length >= s.Length && str.Substring(0, s.Length) == s)
+                {
+                    if (startWorkSearch(str.Substring(s.Length)))
+                    {
+                        return true;
+                    }
+                }
+            }
+            Dictionary<char, string> map = new Dictionary<char, string>();
+            map.Add('2', "abc");
+            map.Add('3', "def");
+            map.Add('4', "ghi");
+            map.Add('5', "jkl");
+            map.Add('6', "mno");
+            map.Add('7', "pqrs");
+            map.Add('8', "tuv");
+            map.Add('9', "wxyz");
+            return false;
+        }
+        public double FindMedianSortedArrays(int[] nums1, int[] nums2)
+        {
+            var mergedArray = MergeArray(nums1, nums2);
+            int medVal = mergedArray.Length / 2;
+            double median;
+            if (mergedArray.Length % 2 == 0)
+            {
+                var med = mergedArray[medVal - 1] + mergedArray[medVal];
+                median = med / 2.00;
+            }
+            else
+            {
+                median = mergedArray[medVal];
+            }
+            Random random_num = new Random();
+            int pivot_index = 1 + random_num.Next(1 - 1);
+
+            return median;
+        }
+
+        public int[] MergeArray(int[] nums1, int[] nums2)
+        {
+            var res = new int[nums1.Length + nums2.Length];
+
+            int p1 = 0; int p2 = 0; int p3 = 0;
+
+            while (p1 < nums1.Length && p2 < nums2.Length)
+            {
+                if (nums1[p1] > nums2[p2])
+                {
+                    res[p3++] = nums2[p2++];
+                }
+                else
+                {
+                    res[p3++] = nums1[p1++];
+                }
+            }
+
+            while (p1 < nums1.Length)
+                res[p3++] = nums1[p1++];
+
+            while (p2 < nums2.Length)
+                res[p3++] = nums2[p2++];
+
+            return res;
+        }
 
     }
+
+
 }

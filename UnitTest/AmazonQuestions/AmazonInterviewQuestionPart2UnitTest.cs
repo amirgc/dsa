@@ -168,12 +168,43 @@ namespace UnitTest.AmazonQuestions
 
         }
 
+        //[Fact]
+        //public void DecodeTest()
+        //{  //"ADOBECODEBANC"
+        //    //"ABC"
+        //    var res = amazonInterViewPart2.NumDecodings("12");
+        //    Assert.Equal(2, res);
+
+        //}
+
         [Fact]
-        public void DecodeTest()
+        public void WordBreakTest()
+        {  //"ADOBECODEBANC"
+           //"ABC"
+           //[]
+            var s = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaab";
+            var res = amazonInterViewPart2.WordBreak(s, new List<string>() {
+                "a","aa","aaa","aaaa","aaaaa","aaaaaa","aaaaaaa","aaaaaaaa","aaaaaaaaa","aaaaaaaaaa"
+            });
+            //Assert.Equal(2, res);
+
+        }
+
+        [Fact]
+        public void LongestConsecutiveTest()
         {  //"ADOBECODEBANC"
             //"ABC"
-            var res = amazonInterViewPart2.NumDecodings("12");
-            Assert.Equal(2, res);
+            var res = amazonInterViewPart2.LongestConsecutive(new int[] { 0, 3, 7, 2, 5, 8, 4, 6, 0, 1 });
+            //Assert.Equal(2, res);
+
+        }
+
+        [Fact]
+        public void FindMedianSortedArraysTest()
+        {  //"ADOBECODEBANC"
+            //"ABC"
+            var res = amazonInterViewPart2.FindMedianSortedArrays(new int[] { 1, 3 }, new int[] { 2,4 });
+            //Assert.Equal(2, res);
 
         }
     }
