@@ -77,9 +77,10 @@ namespace DataStrcutureAlgorithm.Algorithms
         }
 
         List<Node> nodes = new List<Node>();
-
+     
         private void BuildGraph()
         {
+            nodes.Reverse();
             nodes.Add(new Node() { Name = "A", AdjacentsNodesPathMaping = new Dictionary<string, int>() { { "B", 6 }, { "H", 9 } } });
             nodes.Add(new Node() { Name = "B", AdjacentsNodesPathMaping = new Dictionary<string, int>() { { "C", 9 }, { "H", 11 }, { "A", 6 } } });
             nodes.Add(new Node() { Name = "C", AdjacentsNodesPathMaping = new Dictionary<string, int>() { { "B", 9 }, { "F", 6 }, { "D", 5 }, { "I", 2 } } });

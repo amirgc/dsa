@@ -82,17 +82,20 @@ namespace DataStrcutureAlgorithm
             //                         };
             //var res = _amazonInterviewQuestions.OrangesRotting(points);
 
-            var ob = new AmazonInterViewPart2();
-            var testCase = new int[][]
-            {
-                new int[]{ 1,2,3,4,5},
-                new int[]{6,7,8,9,10 },
-                new int[]{11,12,13,14,15 },
-                new int[]{16,17,18,19,20 },
-                new int[]{21,22,23,24,25 },
-            };
+            //var ob = new AmazonInterViewPart2();
+            //var testCase = new int[][]
+            //{
+            //    new int[]{ 1,2,3,4,5},
+            //    new int[]{6,7,8,9,10 },
+            //    new int[]{11,12,13,14,15 },
+            //    new int[]{16,17,18,19,20 },
+            //    new int[]{21,22,23,24,25 },
+            //};
 
-            ob.Rotate(testCase);
+            //ob.Rotate(testCase);
+
+            var ob = new SelectionSort();
+            ob.FindKthLargest(new int[] { 3, 2, 1, 4, 6, 5 }, 2);
             Console.Read();
         }
     }

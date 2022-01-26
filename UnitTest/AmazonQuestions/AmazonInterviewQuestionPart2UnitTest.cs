@@ -203,7 +203,42 @@ namespace UnitTest.AmazonQuestions
         public void FindMedianSortedArraysTest()
         {  //"ADOBECODEBANC"
             //"ABC"
-            var res = amazonInterViewPart2.FindMedianSortedArrays(new int[] { 1, 3 }, new int[] { 2,4 });
+            var res = amazonInterViewPart2.FindMedianSortedArrays(new int[] { 1, 3 }, new int[] { 2, 4 });
+            //Assert.Equal(2, res);
+
+        }
+
+        [Fact]
+        public void TopKFrequentTest()
+        {  //"ADOBECODEBANC" []
+           //3
+           //"ABC" [3,0,1,0]
+            var res = amazonInterViewPart2.TopKFrequent(new int[] { 1, 1, 1, 2, 2, 2, 3, 3, 3 }, 3);
+            //Assert.Equal(2, res);
+
+        }
+        [Fact]
+        public void reverseBitsTest()
+        {  //"ADOBECODEBANC" []
+           //3
+           //"ABC" [3,0,1,0]
+           //var res = amazonInterViewPart2.CoinChange(new int[] { 186, 419, 83, 408 }, 6249);
+            var res = amazonInterViewPart2.CoinChange(new int[] { 1, 2, 5 }, 11);
+
+            //Assert.Equal(2, res);
+            //Assert.Equal(2, res);
+
+        }
+
+        [Fact]
+        public void RomanToIntTest()
+        {  //"ADOBECODEBANC" []
+           //3
+           //"ABC" [3,0,1,0]
+           //var res = amazonInterViewPart2.CoinChange(new int[] { 186, 419, 83, 408 }, 6249);
+            var res = amazonInterViewPart2.RomanToInt("LVIII");
+
+            //Assert.Equal(2, res);
             //Assert.Equal(2, res);
 
         }

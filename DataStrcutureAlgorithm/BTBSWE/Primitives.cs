@@ -682,7 +682,7 @@ namespace DataStrcutureAlgorithm.BTBSWE
         private void AddSuperSetForCurrent(int[] inputSet, List<List<int>> powerSet, int index, List<int> prefix)
         {
             powerSet.Add(prefix);
-
+   
             if (index < inputSet.Length)
             {
                 for (int j = index + 1; j < inputSet.Length; j++)
@@ -693,6 +693,7 @@ namespace DataStrcutureAlgorithm.BTBSWE
                 }
             }
         }
+
 
     }
 }

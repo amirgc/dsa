@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
 namespace DataStrcutureAlgorithm.Algorithms
 {
     public class SelectionSort
@@ -18,14 +15,12 @@ namespace DataStrcutureAlgorithm.Algorithms
         {
             this.nums = nums;
             int size = nums.Length;
-
             // kth largest is (N - k)th smallest
             return quickselect(0, size - 1, size - k);
         }
 
         public int quickselect(int left, int right, int k_smallest)
         {
-
             if (left == right) // If the list contains only one element,
                 return this.nums[left];  // return that element
 
@@ -48,7 +43,7 @@ namespace DataStrcutureAlgorithm.Algorithms
         public int partition(int left, int right, int pivot_index)
         {
             int pivot = this.nums[pivot_index];
-
+           
             // 1. move pivot to end
             swap(pivot_index, right);
             int store_index = left;
@@ -56,13 +51,12 @@ namespace DataStrcutureAlgorithm.Algorithms
             // 2. move all smaller elements to the left
             for (int i = left; i <= right; i++)
             {
-                if (this.nums[i] < pivot)
+                 if (this.nums[i] < pivot)
                 {
                     swap(store_index, i);
                     store_index++;
                 }
             }
-
             // 3. move pivot to its final place
             swap(store_index, right);
 

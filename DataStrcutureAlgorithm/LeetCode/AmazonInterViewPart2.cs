@@ -687,7 +687,146 @@ namespace DataStrcutureAlgorithm.LeetCode
 
             return res;
         }
+        public int[] TopKFrequent(int[] nums, int k)
+        {
+            var res = new List<int>();
 
+            Dictionary<int, int> dict = new Dictionary<int, int>();
+
+            for (int i = 0; i < nums.Length; i++)
+            {
+                if (!dict.ContainsKey(nums[i]))
+                {
+                    dict.Add(nums[i], 0);
+                }
+
+                dict[nums[i]]++;
+            }
+            return MaintainMinStack(dict, k);
+
+        }
+
+        private int[] MaintainMinStack(Dictionary<int, int> dict, int k)
+        {
+            Stack<Tuple<int, int>> max_stack = new Stack<Tuple<int, int>>();
+
+            foreach (var item in dict)
+            {
+                if (max_stack.Count == 0)
+                {
+                    var tup = new Tuple<int, int>(item.Key, item.Value);
+                    max_stack.Push(tup);
+                }
+                else
+                {
+                    var tempStack = new Stack<Tuple<int, int>>();
+
+                    while (max_stack.Count > 0 && max_stack.Peek().Item2 < item.Value)
+                    {
+                        tempStack.Push(max_stack.Pop());
+                    }
+
+                    if (max_stack.Count < k)
+                    {
+                        var tup = new Tuple<int, int>(item.Key, item.Value);
+                        max_stack.Push(tup);
+                    }
+
+                    while (max_stack.Count < k && tempStack.Count > 0)
+                    {
+                        max_stack.Push(tempStack.Pop());
+                    }
+                }
+            }
+
+            var res = new List<int>();
+
+            while (max_stack.Count > 0)
+            {
+                res.Add(max_stack.Pop().Item1);
+            }
+
+            return res.ToArray();
+        }
+
+        public uint reverseBits(uint n)
+        {
+            uint res = 0;
+            int counter = 0;
+            while (counter < 32)
+            {
+                res = res << 1;
+                if ((n & 1) == 1)
+                {
+                    res |= 1;
+                }
+                n = n >> 1;
+                counter++;
+            }
+            return res;
+        }
+
+        int few_coins = int.MaxValue;
+        int _amount = 0;
+
+        public int CoinChange(int[] coins, int amount)
+        {
+            if (amount < 1) return 0;
+            return coinChange(coins, amount, new int[amount]);
+        }
+
+        private int coinChange(int[] coins, int rem, int[] count)
+        {
+            if (rem < 0) return -1;
+            if (rem == 0) return 0;
+
+            if (count[rem - 1] != 0) return count[rem - 1];
+
+            int min = int.MaxValue;
+
+            foreach (int coin in coins)
+            {
+                int res = coinChange(coins, rem - coin, count);
+                if (res >= 0 && res < min)
+                    min = 1 + res;
+            }
+
+            count[rem - 1] = (min == int.MaxValue) ? -1 : min;
+
+            var map = new Dictionary<char, int>();
+
+            return count[rem - 1];
+        }
+        public int RomanToInt(string s)
+        {
+            s.Reverse();
+            var map = new Dictionary<char, int>();
+            map.Add('M', 1000);
+            map.Add('D', 500);
+            map.Add('C', 100);
+            map.Add('L', 50);
+            map.Add('X', 10);
+            map.Add('V', 5);
+            map.Add('I', 1);
+
+            int res = 0;
+            char lastChar = s[s.Length-1];
+
+            foreach (char ch in s.Reverse())
+            {
+                if (map[lastChar] <= map[ch])
+                {
+                    res += map[ch];
+                }
+                else
+                {
+                    res = res - map[ch];
+                }
+                lastChar = ch;
+            }
+
+            return res;
+        }
     }
 
 
