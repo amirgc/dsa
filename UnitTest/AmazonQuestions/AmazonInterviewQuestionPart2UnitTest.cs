@@ -1,8 +1,6 @@
 ﻿using DataStrcutureAlgorithm.DataStructures;
 using DataStrcutureAlgorithm.LeetCode;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using Xunit;
 
 namespace UnitTest.AmazonQuestions
@@ -31,6 +29,7 @@ namespace UnitTest.AmazonQuestions
 
             Assert.Equal(2, res);
         }
+
         [Fact]
         public void TestTrieSearch()
         {

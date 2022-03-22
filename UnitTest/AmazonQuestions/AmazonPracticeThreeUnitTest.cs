@@ -91,11 +91,16 @@ namespace UnitTest.AmazonQuestions
             Assert.Equal(18, res);
         }
         [Fact]
-        public void MostCommonWordTest()
+        public void ForestTest()
         {
-            //[1,2,1,1]
-            var res = _amazonPracticeThree.StrStr("amirknob", "kno");
-            Assert.Equal(4, res);
+            //[1,2,1,1] [[1,2,3],[0,0,4],[7,6,5]] [[],
+            //["Mary","mary@mail.com"],["John","johnnybravo@mail.com"]]
+            var forest = new int[][] {
+                                new int[] { 1, 2, 3 },
+                                new int[] { 0, 0, 4 },
+                                new int[] { 7, 6, 5 }
+                             };
+           _amazonPracticeThree.SortList(new List<string>() { "John", "john_newyork@mail.com", "john00@mail.com", "johnsmith@mail.com" });
         }
     }
 }

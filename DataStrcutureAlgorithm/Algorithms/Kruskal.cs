@@ -48,19 +48,19 @@ namespace DataStrcutureAlgorithm.Algorithms
             return a;
         }
 
-        public Boolean isInSameGroup(int a, int b)
+        public bool isInSameGroup(int a, int b)
         {
             // Return true if both a and b belong to the same set, otherwise return false
             return Find(a) == Find(b);
         }
 
         // Initialize weight for each node to be 1
-        public DisjointSet(int N)
+        public DisjointSet(int n)
         {
-            this.parents = new int[N + 1];
-            this.weights = new int[N + 1];
+            this.parents = new int[n + 1];
+            this.weights = new int[n + 1];
             // Set the initial parent node to itself
-            for (int i = 1; i <= N; ++i)
+            for (int i = 1; i <= n; ++i)
             {
                 this.parents[i] = i;
                 this.weights[i] = 1;
@@ -121,7 +121,7 @@ namespace DataStrcutureAlgorithm.Algorithms
 
             for (int i = 0; i < connections.Length; ++i)
             {
-                if (disjointset.FindSet(connections[i][0]) == connections[i][1])
+                if (disjointset.FindSet(connections[i][0]) == disjointset.FindSet(connections[i][1]))
                 {
                     continue;
                 }

@@ -308,7 +308,7 @@ namespace DataStrcutureAlgorithm.LeetCode
             }
 
             // Min heap
-            PriorityQueueC allocator = new PriorityQueueC(intervals.Length);
+            MinHeap allocator = new MinHeap(intervals.Length);
 
             // Sort the intervals by start time
             Array.Sort(
@@ -899,7 +899,7 @@ namespace DataStrcutureAlgorithm.LeetCode
         {
             int totalCost = 0;
 
-            PriorityQueueC pq = new PriorityQueueC(sticks.Length);
+            MinHeap pq = new MinHeap(sticks.Length);
 
             // add all sticks to the min heap.
             foreach (int stick in sticks)

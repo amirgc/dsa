@@ -1,13 +1,15 @@
-﻿namespace DataStrcutureAlgorithm.DataStructures
+﻿using System.Collections.Generic;
+
+namespace DataStrcutureAlgorithm.DataStructures
 {
     // Priority Queue Implementation
-    public class PriorityQueueC
+    public class MinHeap
     {
         int priotityQueueSize;
         int real_Size;
         int[] min_Heap;
 
-        public PriorityQueueC(int size)
+        public MinHeap(int size)
         {
             this.priotityQueueSize = size;
             real_Size = 0;
@@ -50,6 +52,7 @@
             {
                 return int.MinValue;
             }
+
             int min_val = min_Heap[1];
             min_Heap[1] = min_Heap[real_Size];
             real_Size--;
@@ -68,7 +71,7 @@
                         min_Heap[indexLeft] = temp;
                         parent = indexLeft;
                     }
-                    else 
+                    else
                     {
                         int temp = min_Heap[parent];
                         min_Heap[parent] = min_Heap[indexRight];

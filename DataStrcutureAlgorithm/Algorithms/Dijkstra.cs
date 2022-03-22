@@ -7,7 +7,8 @@ namespace DataStrcutureAlgorithm.Algorithms
 {
     public class Dijkstra
     {
-        private static int MinimumDistance(int[] distance, bool[] shortestPathTreeSet, int verticesCount)
+        int[] parent;
+        private int MinimumDistance(int[] distance, bool[] shortestPathTreeSet, int verticesCount)
         {
             int min = int.MaxValue;
             int minIndex = 0;
@@ -24,7 +25,7 @@ namespace DataStrcutureAlgorithm.Algorithms
             return minIndex;
         }
 
-        private static void Print(int[] distance, int verticesCount)
+        private void Print(int[] distance, int verticesCount)
         {
             Console.WriteLine("Vertex    Distance from source");
 
@@ -32,8 +33,19 @@ namespace DataStrcutureAlgorithm.Algorithms
                 Console.WriteLine("{0}\t  {1}", i, distance[i]);
         }
 
-        public static void DijkstraAlgo(int[,] graph, int source, int verticesCount)
+        private void PrintParent(int n)
         {
+            while (n != 0)
+            {
+                Console.WriteLine(parent[n]+"<------'");
+                n = parent[n];
+            }
+        }
+
+        public void DijkstraAlgo(int[,] graph, int source, int verticesCount)
+        {
+            parent = new int[verticesCount];
+
             int[] distance = new int[verticesCount];
             bool[] shortestPathTreeSet = new bool[verticesCount];
 
@@ -41,6 +53,7 @@ namespace DataStrcutureAlgorithm.Algorithms
             {
                 distance[i] = int.MaxValue;
                 shortestPathTreeSet[i] = false;
+                parent[i] = i;
             }
 
             distance[source] = 0;
@@ -51,34 +64,24 @@ namespace DataStrcutureAlgorithm.Algorithms
                 shortestPathTreeSet[u] = true;
 
                 for (int v = 0; v < verticesCount; ++v)
-                    if (!shortestPathTreeSet[v] && Convert.ToBoolean(graph[u, v]) && distance[u] != int.MaxValue && distance[u] + graph[u, v] < distance[v])
+                {
+                    if (!shortestPathTreeSet[v] && Convert.ToBoolean(graph[u, v])
+                        && distance[u] != int.MaxValue && distance[u] + graph[u, v] < distance[v])
+                    {
                         distance[v] = distance[u] + graph[u, v];
+                        parent[v] = u;
+                    }
+                }
             }
 
             Print(distance, verticesCount);
+            PrintParent(3);
         }
     }
 
     public class DijkstraGraph
     {
         public DijkstraGraph()
-        {
-            BuildGraph();
-
-        }
-
-        internal class Node
-        {
-            public string Name { get; set; }
-            public string Predecessor { get; set; }
-            public int MinDistance { get; set; } = int.MaxValue;
-            public bool IsLocked { get; set; }
-            public Dictionary<string, int> AdjacentsNodesPathMaping { get; set; }
-        }
-
-        List<Node> nodes = new List<Node>();
-     
-        private void BuildGraph()
         {
             nodes.Reverse();
             nodes.Add(new Node() { Name = "A", AdjacentsNodesPathMaping = new Dictionary<string, int>() { { "B", 6 }, { "H", 9 } } });
@@ -91,6 +94,17 @@ namespace DataStrcutureAlgorithm.Algorithms
             nodes.Add(new Node() { Name = "H", AdjacentsNodesPathMaping = new Dictionary<string, int>() { { "I", 5 }, { "B", 11 }, { "A", 9 }, { "G", 1 } } });
             nodes.Add(new Node() { Name = "I", AdjacentsNodesPathMaping = new Dictionary<string, int>() { { "H", 5 }, { "C", 2 }, { "G", 6 } } });
         }
+
+        internal class Node
+        {
+            public string Name { get; set; }
+            public string Predecessor { get; set; }
+            public int MinDistance { get; set; } = int.MaxValue;
+            public bool IsLocked { get; set; }
+            public Dictionary<string, int> AdjacentsNodesPathMaping { get; set; }
+        }
+
+        List<Node> nodes = new List<Node>();
 
         public void FindMinimumDistancePathBetweenNode()
         {
